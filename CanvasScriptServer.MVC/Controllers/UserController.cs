@@ -10,25 +10,20 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class UserController : Controller
     {
-        UserCo.ICrud<IUser, string> UserCoCud;
-        UserCo.IFilterAndSort<IUser> UserCoFilter;
-        UserCo.IGetBo<IUser, string> UserCoGet;
+        ICanvasScriptServerUnitOfWork unitOfWork;
 
-
-        public UserController(UserCo.ICrud<IUser, string> UserCoCud, UserCo.IFilterAndSort<IUser> UserCoFilter, UserCo.IGetBo<IUser, string> UserCoGet)
+        public UserController(ICanvasScriptServerUnitOfWork unitOfWork)
         {
-            this.UserCoCud = UserCoCud;
-            this.UserCoFilter = UserCoFilter;
-            this.UserCoGet = UserCoGet;
+            this.unitOfWork = unitOfWork;            
         }
 
 
         IQueryable<IUser> GetUsers(bool OrderUpward)
         {
             if (OrderUpward)
-                return UserCoFilter.GetFilteredListOfBo().OrderBy(r => r.Name);
+                return unitOfWork.Users.GetFilteredListOfBo().OrderBy(r => r.Name);
             else
-                return UserCoFilter.GetFilteredListOfBo().OrderByDescending(r => r.Name);
+                return unitOfWork.Users.GetFilteredListOfBo().OrderByDescending(r => r.Name);
         }
 
         // GET: User
@@ -55,10 +50,8 @@ namespace CanvasScriptServer.MVC.Controllers
             else
             {
                 // speichern
-                var user = UserCoCud.CreateBo();
-                user.Name = NewUser.Name;
-                UserCoCud.AddToCollection(user);
-                UserCoCud.SubmitChanges();
+                unitOfWork.CreateUser(NewUser.Name);
+                unitOfWork.SaveChanges();
 
                 return View("Index", GetUsers(true));
             }
@@ -68,10 +61,9 @@ namespace CanvasScriptServer.MVC.Controllers
         [HandleError(ExceptionType = typeof(Exception), View = "Error")]
         public ActionResult Delete(string username)
         {
-            var bo =UserCoGet.GetBo(username);
-            UserCoCud.RemoveFromCollection(bo);
-            UserCoCud.SubmitChanges();
-
+            unitOfWork.deleteUser(username);
+            unitOfWork.SaveChanges();
+            
             return View("Index", GetUsers(true));
         }
 

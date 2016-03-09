@@ -46,10 +46,11 @@ namespace CanvasScriptServer
 
         public virtual IUser CreateUser(string Name)
         {
-            if (Users.Any(Name))
+            if (!Users.Any(Name))
             {
-                var user = Users.CreateBo();
+                var user = Users.CreateBo();                
                 user.Name = Name;
+                Users.AddToCollection(user);
                 return user;
             }
             else
