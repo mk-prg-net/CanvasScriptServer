@@ -1,0 +1,49 @@
+﻿@model CanvasScriptServer.MVC.Models.CanvasScriptsMgmt.IndexViewModel
+
+@{
+    ViewBag.Title = "Scriptverwaltung: Alle Scripte von ";
+}
+
+<h2>@ViewBag.Title von @Model.User.Name</h2>
+
+
+@Html.ActionLink("Zurück", "Index", new { controller="User"})
+<br/>
+<a href="@Url.RouteUrl("cvs", new {action="NewScript", username = Model.User.Name})" class="btn btn-primary">Neue Liste</a>
+<table class="table table-striped">
+    @foreach (var script in Model.Scripts)
+    {
+        <tr>            
+            <td>
+                @script.Created.ToShortDateString()
+            </td>
+            <td>
+                @script.Created.ToShortTimeString()
+            </td>
+            <td>
+                @script.Name
+            </td>
+            <td>
+                <a href="@Url.RouteUrl("cvs", new{action="Edit", id= script.Name})">
+                    <span class="glyphicon glyphicon-pencil"></span> edit
+                </a>
+            </td>
+            <td>
+                <a href="@Url.Action("Index", "ScriptShow", new{ id= script.Name})">
+                    <span class="glyphicon glyphicon-stats"></span> ansehen
+                </a>
+            </td>
+            <td>
+                <a href="@Url.RouteUrl("cvs", new{action="Delete",  username = Model.User.Name, scriptname = script.Name})">
+                    <span class="glyphicon glyphicon-remove"></span> löschen
+                </a>
+            </td>
+
+
+
+        </tr>
+    }
+</table>
+
+
+

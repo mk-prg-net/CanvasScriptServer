@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+@model CanvasScriptServer.ICanvasScript
+
+@{
+    ViewBag.Title = "Canvas Painter: edit " + Model.Name + " von " + Model.User.Name;
+}
+
+<form>
+    <h1>@ViewBag.Title</h1>
+    @Html.ActionLink("Zurück", "Index", new { username=Model.User.Name})
+
+    @* Namen des Scriptes sichern *@
+    <input type="hidden" id="ScriptName" value="@Model.Name" />
+
+    <div class="row">
+        <div class="col-xs-9 col-md-9 col-lg-9">
+
+            <div class="btn-group btn-group-lg" role="group">
+
+
+                <button id="LineTo" class="btn btn-default" type="button">
+                    <img src="~/Content/pics/Geometric/SymLine.svg" height="20" />
+                </button>
+
+                <button id="Circle" class="btn btn-default" type="button">
+                    <img src="~/Content/pics/Geometric/SymCircle.svg" height="20" />
+                </button>
+
+                <button id="Rect" class="btn btn-default" type="button">
+                    <img src="~/Content/pics/Geometric/SymRectangle.svg" height="20" />
+                </button>
+
+
+                <button id="red" class="btn btn-danger" type="button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+
+                <button id="green" class="btn btn-success" type="button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+
+                <button id="blue" class="btn btn-primary" type="button">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-xs-12 col-md-9 col-lg-9">
+            <canvas id="pane" class="" width="800" height="600"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-9 col-md-9 col-lg-9">
+            <div class="btn-group btn-group-lg" role="group">
+
+                <button id="Save" class="btn btn-default" type="button" title="Speichern im LocalStore des Browsers">
+                    <span class="glyphicon glyphicon-upload"></span>Browser
+                </button>
+
+                <button id="SaveToServer" class="btn btn-default" type="button" title="Upload zum Server">
+                    <span class="glyphicon glyphicon-upload"></span>Server
+                </button>
+
+                <button id="ClearCanvas" class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+
+                <button id="Restore" class="btn btn-default" type="button" title="Wiederherstellen aus dem Localstore des Browsers">
+                    <span class="glyphicon glyphicon-download"></span>Browser
+                </button>
+
+                <button id="RestoreFromServer" class="btn btn-default" type="button" title="Herunterladen vom Server">
+                    <span class="glyphicon glyphicon-download"></span>Server
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <h3>Scripte</h3>
+            <table id="Scripts" class="table table-striped"></table>
+        </div>
+    </div>
+
+</form>
+
+<script src="~/Scripts/require.js" data-main="/Scripts/mk-prg-net/CanvasPainter/Edit/DocumentReady.js"></script>
+
+

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CanvasScriptServer.CanvasScriptRepository">
+    <Position X="0.5" Y="0.5" Width="3" />
+    <NestedTypes>
+      <Class Name="CanvasScriptServer.CanvasScriptRepository.SortName" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Repositories\CanvasScriptRepository.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\CanvasScriptRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasScriptServer.UserRepository">
+    <Position X="4" Y="0.5" Width="3" />
+    <NestedTypes>
+      <Class Name="CanvasScriptServer.UserRepository.SortName" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Repositories\UserRepository.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CanvasScriptServer.CanvasScriptServerUnitOfWork" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>gCAAACAAAQAAAIAAAgAAAAAAAAAAAAABAAAABAAAAAQ=</HashCode>
+      <FileName>UnitOfWork\CanvasScriptServerUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="CanvasScriptServer.ICanvasScript">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAACAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Bo\ICanvasScript.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanvasScriptServer.IUser">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Bo\IUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CanvasScriptServer.ICanvasScriptServerUnitOfWork">
+    <Position X="7.5" Y="4" Width="3" />
+    <TypeIdentifier>
+      <HashCode>gCAAACAAAQAAAAAAAgAAAAAAAAAAAAAAAAAABAAAAAQ=</HashCode>
+      <FileName>UnitOfWork\ICanvasScriptServerUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

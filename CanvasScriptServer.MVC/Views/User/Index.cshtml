@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CanvasScriptServer.IUser>
+
+@{
+    ViewBag.Title = "Benutzerverwaltung: Alle Benutzer";
+}
+
+<h2>Start der Listenverarbeitung</h2>
+
+<p>
+    Bitte wählen Sie einen Benutzer, dessen Werke bearbeitet werden sollen.
+</p>
+
+@Html.ActionLink("Neuer Benutzer", "NewUser", new { }, new { @class="btn btn-primary"})
+<a href="@Url.RouteUrl("cvs", new{ action="Index", OrderUpward="true"})" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span> </a>
+<a href="@Url.RouteUrl("cvs", new { action = "Index", OrderUpward = "false" })" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span> </a>
+
+<table class="table">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td><a href="@Url.Action("Index", "CanvasScripts", new{ username= user.Name})" >
+                    <span class="glyphicon glyphicon-share"></span> auswählen
+                </a>
+            </td>
+            <td>
+                <a href="@Url.Action("Delete", new{ username= user.Name})">
+                    <span class="glyphicon glyphicon-remove"></span> löschen
+                </a>
+            </td>
+
+        </tr>
+    }
+</table>
+
+
+
+
+

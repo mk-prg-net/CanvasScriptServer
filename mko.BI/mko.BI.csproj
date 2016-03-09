@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9C1FC4C5-5BE2-4EFD-87D9-6BD6F12AC07E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>mko.BI</RootNamespace>
+    <AssemblyName>mko.BI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mko, Version=7.1.5.0, Culture=neutral, PublicKeyToken=f4d93f46e53e0656, processorArchitecture=MSIL">
+      <HintPath>..\packages\mko.7.1.5.0\lib\net45\mko.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mko.Algo, Version=1.2.2.0, Culture=neutral, PublicKeyToken=f4d93f46e53e0656, processorArchitecture=MSIL">
+      <HintPath>..\packages\mko.Algo.1.2.2.0\lib\net45\mko.Algo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bo\Addresses\ILocation.cs" />
+    <Compile Include="Bo\Addresses\IMailingAddressCompany.cs" />
+    <Compile Include="Bo\Addresses\IMailingAddressPerson.cs" />
+    <Compile Include="Bo\Addresses\Location.cs" />
+    <Compile Include="Bo\Addresses\MailingAddressCompany.cs" />
+    <Compile Include="Bo\Addresses\MailingAddressPerson.cs" />
+    <Compile Include="Bo\Addresses\MailingAddressWithChangeTracking.cs" />
+    <Compile Include="Bo\Addresses\Ops.cs" />
+    <Compile Include="Bo\ICoreData.cs" />
+    <Compile Include="Bo\Interval.cs" />
+    <Compile Include="ChangeTracking\BoWithChangeTracking.cs" />
+    <Compile Include="IMailingAddress.cs" />
+    <Compile Include="ITelComAddress.cs" />
+    <Compile Include="MailingAddress.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BoCo.cs" />
+    <Compile Include="Repositories\DefSortOrder.cs" />
+    <Compile Include="Repositories\DefSortOrderCol.cs" />
+    <Compile Include="Repositories\FilterController.cs" />
+    <Compile Include="Repositories\FilterFunctor.cs" />
+    <Compile Include="Repositories\FiltersCombine.cs" />
+    <Compile Include="Repositories\Interfaces\ICrud.cs" />
+    <Compile Include="Repositories\Interfaces\IFilterAndSort.cs" />
+    <Compile Include="Repositories\Interfaces\IGetBo.cs" />
+    <Compile Include="Repositories\TraceEnv.cs" />
+    <Compile Include="StateMachine\Behavior\SingleStateMachineBehavior.cs" />
+    <Compile Include="StateMachine\Behavior\IStateBehavior.cs" />
+    <Compile Include="StateMachine\StateBaseClasses\CancelBase.cs" />
+    <Compile Include="StateMachine\StateBaseClasses\ErrorBase.cs" />
+    <Compile Include="StateMachine\Exception.cs" />
+    <Compile Include="StateMachine\Behavior\FinalStateBehavior.cs" />
+    <Compile Include="StateMachine\FinitStateMachine.cs" />
+    <Compile Include="StateMachine\Inputs\IInput.cs" />
+    <Compile Include="StateMachine\Inputs\Input.cs" />
+    <Compile Include="StateMachine\Behavior\NormalStateBehavior.cs" />
+    <Compile Include="StateMachine\Behavior\StartStateBehavior.cs" />
+    <Compile Include="StateMachine\StateBaseClasses\State.cs" />
+    <Compile Include="StateMachine\IStateTransistion.cs" />
+    <Compile Include="TelComAddress.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="mko.BI.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

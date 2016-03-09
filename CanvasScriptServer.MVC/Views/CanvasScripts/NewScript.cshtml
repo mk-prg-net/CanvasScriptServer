@@ -1,0 +1,25 @@
+﻿@model CanvasScriptServer.IUser
+@{
+    ViewBag.Title = "NewList";
+}
+
+<h2>Neue Liste anlegen für @Model.Name</h2>
+
+@using (Html.BeginForm(new { action = "Create"  }))
+{
+    @Html.Hidden("username", Model.Name)
+
+    <dl>
+        <dt>
+            Name der neuen Liste
+        </dt>
+        <dd>
+            @*@Html.Editor("listname", new { id = "listname", name = "listname" })*@
+
+            <input type="text" id="scriptname" name="scriptname" class="form-control" />
+        </dd>
+    </dl>
+    
+    <input type="submit" class="btn btn-primary" value="Anlegen"/>
+    <a href="@Url.RouteUrl("cvs", new{action="Index", username= Model.Name})" class="btn btn-primary">Abbrechen</a>
+}

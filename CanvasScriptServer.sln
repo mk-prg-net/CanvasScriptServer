@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer", "CanvasScriptServer\CanvasScriptServer.csproj", "{32238892-7E2B-465A-8242-51C1590FB748}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.Mocks", "CanvasScriptServer.Mocks\CanvasScriptServer.Mocks.csproj", "{CC1769BB-46E4-45F2-BB90-CB4B838052AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.MVC", "CanvasScriptServer.MVC\CanvasScriptServer.MVC.csproj", "{45853B68-48C1-4968-9BAC-49A963361F90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.MVC.Tests", "CanvasScriptServer.MVC.Tests\CanvasScriptServer.MVC.Tests.csproj", "{5E1579B6-F1CC-44DD-9D15-3B7E7FACE0DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServerDI.Test", "CanvasScriptServerDI.Test\CanvasScriptServerDI.Test.csproj", "{2F380D0E-4F21-45AC-B9C8-3A6113CF4CD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32238892-7E2B-465A-8242-51C1590FB748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32238892-7E2B-465A-8242-51C1590FB748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32238892-7E2B-465A-8242-51C1590FB748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32238892-7E2B-465A-8242-51C1590FB748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1769BB-46E4-45F2-BB90-CB4B838052AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1769BB-46E4-45F2-BB90-CB4B838052AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1769BB-46E4-45F2-BB90-CB4B838052AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1769BB-46E4-45F2-BB90-CB4B838052AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45853B68-48C1-4968-9BAC-49A963361F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45853B68-48C1-4968-9BAC-49A963361F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45853B68-48C1-4968-9BAC-49A963361F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45853B68-48C1-4968-9BAC-49A963361F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E1579B6-F1CC-44DD-9D15-3B7E7FACE0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1579B6-F1CC-44DD-9D15-3B7E7FACE0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1579B6-F1CC-44DD-9D15-3B7E7FACE0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1579B6-F1CC-44DD-9D15-3B7E7FACE0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F380D0E-4F21-45AC-B9C8-3A6113CF4CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F380D0E-4F21-45AC-B9C8-3A6113CF4CD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F380D0E-4F21-45AC-B9C8-3A6113CF4CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F380D0E-4F21-45AC-B9C8-3A6113CF4CD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="mko.BI.StateMachine.BehaviorOfState" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>StateMachine\BehaviorOfState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.Cancel" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\CancelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.Error" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAABAAAAAAAA=</HashCode>
+      <FileName>StateMachine\ErrorBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.UnexcpectedStateException" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\Exception.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.FinalState" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>StateMachine\FinalState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.FinitStateMachine&lt;TStateFactory&gt;" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\FinitStateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.Input&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\Input.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="mko.BI.StateMachine.NormalState" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>StateMachine\NormalState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.StartState" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>StateMachine\StartState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="mko.BI.StateMachine.State" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAIAAAAAAAAACAAAAAAEwAAAAAAAASAAAAgAAACAA=</HashCode>
+      <FileName>StateMachine\State.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="mko.BI.StateMachine.IInput&lt;TInputTags&gt;" Collapsed="true">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\IInput.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="mko.BI.StateMachine.IStateTransition&lt;TInput, TInputTags, TStateFactory&gt;" Collapsed="true">
+    <Position X="9.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>StateMachine\IStateTransistion.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

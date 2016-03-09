@@ -1,0 +1,35 @@
+﻿@model CanvasScriptServer.MVC.Models.UserMgmt.UserViewModel
+
+@{
+    ViewBag.Title = "NewUser";
+}
+
+<h2>Neuen Benutzer anlegen</h2>
+
+@using (Html.BeginForm(new { action = "SaveUser" }))
+{
+    <div class="form-group">
+
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Name) </dt>
+            <dd>@Html.EditorFor(model => model.Name)
+            &nbsp;
+            @* 
+                Fehlermeldungen der Validierung können über den folgenden Helper
+                ausgegeben werden.
+            *@           
+            @Html.ValidationMessageFor(model => model.Name)
+            </dd>
+
+        </dl>
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Speichern" class="btn btn-primary" />
+        <a href="@Url.Action("Index")" class="btn btn-primary">Abbrechen</a>
+
+    </div>
+}
+
+
+

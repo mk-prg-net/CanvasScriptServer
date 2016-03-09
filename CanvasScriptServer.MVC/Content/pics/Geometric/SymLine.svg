@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<svg version="1.2" baseProfile="tiny" width="16mm" height="16mm" viewBox="0 0 1600 1600" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+ <g visibility="visible" id="MasterSlide_1_WEB-Draw-klein">
+  <desc>Master slide
+  </desc>
+  <rect fill="none" stroke="none" x="0" y="0" width="1600" height="1600"/>
+ </g>
+ <g visibility="visible" id="Slide_1_page1">
+  <g>
+   <path fill="none" stroke="rgb(51,51,51)" id="Drawing_1_0" stroke-width="106" stroke-linejoin="round" d="M 90,90 L 1454,431 545,943 1141,1278"/>
+   <path fill="rgb(51,51,51)" stroke="none" id="Drawing_1_1" d="M 1161,1251 L 1185,1228 1215,1207 1249,1193 1286,1187 1322,1189 1355,1197 1386,1210 1412,1229 1437,1254 1457,1284 1471,1318 1476,1354 1474,1390 1468,1424 1454,1455 1435,1481 1410,1505 1380,1525 1346,1539 1310,1545 1274,1543 1240,1535 1210,1523 1183,1503 1159,1479 1139,1449 1124,1415 1119,1378 1120,1343 1129,1309 1141,1279 1161,1251 Z"/>
+  </g>
+ </g>
+</svg>
