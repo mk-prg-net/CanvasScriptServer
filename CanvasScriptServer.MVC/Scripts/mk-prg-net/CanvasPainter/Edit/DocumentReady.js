@@ -53,8 +53,8 @@ requirejs.config({
 
 
 // 2. Starten der Anwendung
-requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDescriptor', 'MouseTools/SelectPoint', 'MouseTools/Circle', 'MouseTools/Rect'],
-    function (Angle, Point, Script, StyleDescriptor, SelectPoint, CircleMouseTool, RectMouseTool) {
+requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDescriptor', 'MouseTools/SelectPoint', 'MouseTools/Circle', 'MouseTools/Rect', 'MouseTools/Line'],
+    function (Angle, Point, Script, StyleDescriptor, SelectPoint, CircleMouseTool, RectMouseTool, LineMouseTool) {
 
         "use strict";
 
@@ -66,6 +66,7 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
         var idScripts = "#Scripts";
 
         // Namen des zu editierenden Scriptes bestimmen
+        var userName = $('#UserName').val();
         var scriptName = $('#ScriptName').val();
 
 
@@ -101,9 +102,14 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
             }
         }
 
-        // Wiiederherstellen vom Server
-        function RestoreFromServer(scriptName, ctx) {
-            var url = '/api/CanvasScriptWebApi/' + scriptName;
+
+        function MakeRequestScriptUrl(userName, scriptName) {
+            return '/api/CanvasScriptWebApi?userName=' + userName + '&scriptName=' + scriptName;
+        }
+
+        // Wiederherstellen vom Server
+        function RestoreFromServer(userName, scriptName, ctx) {
+            var url = MakeRequestScriptUrl(userName, scriptName);
 
             // Script beim Start vom Server abrufen
             $.ajax({
@@ -136,12 +142,13 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
         }
 
 
-        function SaveToServer(scriptName, ctx) {
+        function SaveToServer(userName, scriptName, ctx) {
 
-            var url = '/api/CanvasScriptWebApi/' + scriptName;
+            var url = MakeRequestScriptUrl(userName, scriptName);            
 
             var Param = {
-                name: scriptName,
+                userName: userName,
+                scriptName: scriptName,
                 scriptJson: JSON.stringify(Drawing)
             };
 
@@ -198,14 +205,14 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
             Script.plot(canvasInit, ctx);
 
-            RestoreFromServer(scriptName, ctx);
+            RestoreFromServer(userName, scriptName, ctx);
 
             // Lokal sichern
             $("#Save").click(SavePic);
 
             // Auf Server sichern
             $("#SaveToServer").click(function () {
-                SaveToServer(scriptName, ctx);
+                SaveToServer(userName, scriptName, ctx);
             });
 
 
@@ -215,7 +222,7 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
 
             $("#RestoreFromServer").click(function () {
-                RestoreFromServer(scriptName, ctx);
+                RestoreFromServer(userName, scriptName, ctx);
             });
 
 
@@ -257,6 +264,28 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
                 })();
             });
 
+
+            $("#LineTo").click(function () {
+
+                LineMouseTool(idCanvas,
+                    function (line) { // done
+
+                        PrintScriptListing(line);
+
+                        //$(idScripts).append(rect.map(function (script) {
+                        //    return '<tr><td><code>' + JSON.stringify(script, null, 3) + '</code></td></tr>';
+                        //}));
+
+                        // Bestehende Zeichnung erweitern
+                        line.unshift(Drawing.length, 0);
+                        [].splice.apply(Drawing, line);
+
+                    },
+                    function (err) { // fail
+
+                    },
+                    shapeStyle);
+            });
 
 
             $("#Circle").click(function () {

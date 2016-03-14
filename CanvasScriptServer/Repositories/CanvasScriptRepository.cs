@@ -41,20 +41,12 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class CanvasScriptRepository : mko.BI.Repositories.BoCoBase<ICanvasScript, string>        
+    public abstract class CanvasScriptRepository : mko.BI.Repositories.BoCo<ICanvasScript, string>        
     {
         public class SortName : mko.BI.Repositories.DefSortOrderCol<ICanvasScript, string>
         {
             public SortName(bool Descending) : base(r => r.Name, Descending) { }
         }
-
-        /// <summary>
-        /// Liefert true, wenn  der Benutzer im Repo vorhanden ist
-        /// </summary>
-        /// <param name="?"></param>
-        /// <returns></returns>
-        public abstract bool Any(string scriptname);
-
 
         public CanvasScriptRepository()
             : base(new SortName(true)) { }

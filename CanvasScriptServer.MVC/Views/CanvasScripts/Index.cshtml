@@ -24,7 +24,7 @@
                 @script.Name
             </td>
             <td>
-                <a href="@Url.RouteUrl("cvs", new{action="Edit", id= script.Name})">
+                <a href="@Url.RouteUrl("cvs", new{action="Edit", userName= script.User.Name, scriptName= script.Name})">
                     <span class="glyphicon glyphicon-pencil"></span> edit
                 </a>
             </td>

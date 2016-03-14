@@ -41,12 +41,15 @@ namespace CanvasScriptServer.MVC.App_Start
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
 
-            container.RegisterType<UserCo.ICrud<IUser, string>, Mocks.UsersRepository>();
-            container.RegisterType<UserCo.IFilterAndSort<IUser>, Mocks.UsersRepository>();
-            container.RegisterType<UserCo.IGetBo<IUser, string>, Mocks.UsersRepository>();
+            //container.RegisterType<UserCo.ICrud<IUser, string>, Mocks.UsersRepository>();
+            //container.RegisterType<UserCo.IFilterAndSort<IUser>, Mocks.UsersRepository>(new ContainerControlledLifetimeManager());
+            //container.RegisterType<UserCo.IGetBo<IUser, string>, Mocks.UsersRepository>(new ContainerControlledLifetimeManager());
 
-            container.RegisterType<CanvasScriptServer.UserRepository, Mocks.UsersRepository>();
-            container.RegisterType<CanvasScriptServer.CanvasScriptRepository, Mocks.CanvasScriptsRepository>();
+            // Mocks.User hat einen Konstruktor mit nicht leerer Parameterliste. Die Parameter beim
+            //container.RegisterType<CanvasScriptServer.IUser, CanvasScriptServer.Mocks.User>(new InjectionConstructor("unbekannter Benutzer"));
+
+            //container.RegisterType<CanvasScriptServer.UserRepository, Mocks.UsersRepository>(new ContainerControlledLifetimeManager());
+            //container.RegisterType<CanvasScriptServer.CanvasScriptRepository, Mocks.CanvasScriptsRepository>(new ContainerControlledLifetimeManager());
 
             container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.Mocks.CanvasScriptServerUnitOfWork>();
 

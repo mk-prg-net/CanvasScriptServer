@@ -37,21 +37,18 @@ namespace CanvasScriptServer
         }
 
 
-        public void SaveChanges()
+        public virtual void saveChanges()
         {
             Users.SubmitChanges();
             Scripts.SubmitChanges();
         }
 
 
-        public virtual IUser CreateUser(string Name)
+        public virtual IUser createUser(string Name)
         {
             if (!Users.Any(Name))
             {
-                var user = Users.CreateBo();                
-                user.Name = Name;
-                Users.AddToCollection(user);
-                return user;
+                return Users.CreateBoAndAddToCollection(Name);                                                
             }
             else
             {
@@ -61,28 +58,24 @@ namespace CanvasScriptServer
         
 
 
-        public virtual ICanvasScript CreateScript(string Username, string NameOfScript)
+        public virtual ICanvasScript createScript(string Username, string NameOfScript)
         {
-            var newScript = Scripts.CreateBo();
+            var newScript = Scripts.CreateBoAndAddToCollection(NameOfScript);
             newScript.User = Users.GetBo(Username);
             newScript.Created = DateTime.Now;
             newScript.Name = NameOfScript;
             newScript.ScriptAsJson = "[{\"beginPath\": \"true\"}, {\"strokeStyle\": { \"Style\": \"rgb(255, 255, 0)\"}}, {\"moveTo\": {\"X\": 0, \"Y\":0}}, {\"lineTo\": {\"X\": 100, \"Y\":100}}, { \"closePath\": true}, {\"stroke\": true} ]";
-
-            Scripts.AddToCollection(newScript);
-
+            
             return newScript;
 
         }
 
 
-
         public virtual void deleteUser(string username)
         {
             if (Users.Any(username))
-            {
-                var user = Users.GetBo(username);
-                Users.RemoveFromCollection(user);
+            {                
+                Users.RemoveFromCollection(username);
             }
         }
 

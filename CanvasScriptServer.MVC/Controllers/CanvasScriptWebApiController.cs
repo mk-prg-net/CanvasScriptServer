@@ -17,9 +17,9 @@ namespace CanvasScriptServer.MVC.Controllers
         }
 
 
-        public string Get(string id)
+        public string Get(string userName, string scriptName)
         {
-            var script = unitOfWork.Scripts.GetBo(id);
+            var script = unitOfWork.Scripts.BoCollection.First(r => r.User.Name == userName && r.Name == scriptName);
             if(script == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             return script.ScriptAsJson;
@@ -27,7 +27,7 @@ namespace CanvasScriptServer.MVC.Controllers
 
         public string Post([FromBody] Models.CanvasScriptsMgmt.ScriptSimple scriptFromClient)
         {
-            var script = unitOfWork.Scripts.GetBo(scriptFromClient.name);
+            var script = unitOfWork.Scripts.BoCollection.First(r => r.User.Name == scriptFromClient.userName && r.Name == scriptFromClient.scriptName);
             script.ScriptAsJson = scriptFromClient.scriptJson;
             unitOfWork.Scripts.SubmitChanges();
 

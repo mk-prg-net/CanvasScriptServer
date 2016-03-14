@@ -11,6 +11,9 @@
     <h1>@ViewBag.Title</h1>
     @Html.ActionLink("Zurück", "Index", new { username=Model.User.Name})
 
+    @* Name des Benutzers sichern *@
+    <input type="hidden" id="UserName" value="@Model.User.Name" />
+
     @* Namen des Scriptes sichern *@
     <input type="hidden" id="ScriptName" value="@Model.Name" />
 

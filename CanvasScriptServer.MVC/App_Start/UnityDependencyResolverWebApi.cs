@@ -7,7 +7,7 @@
 //  Projekt.......: CanvasScriptsServer.MVC
 //  Name..........: UnityDependencyResolver.cs
 //  Aufgabe/Fkt...: Implementierung des IDependencyResolver- Interfaces 
-//                  für den Unity IoC
+//                  für den Unity IoC für WebAPI
 //                  Quelle: http://www.asp.net/web-api/overview/advanced/dependency-injection
 //
 //

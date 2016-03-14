@@ -46,6 +46,14 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Interception.4.0.1\lib\Net45\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -109,9 +117,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CanvasScriptServer.Mocks\CanvasScriptServer.Mocks.csproj">
+      <Project>{cc1769bb-46e4-45f2-bb90-cb4b838052aa}</Project>
+      <Name>CanvasScriptServer.Mocks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CanvasScriptServer.MVC\CanvasScriptServer.MVC.csproj">
       <Project>{45853B68-48C1-4968-9BAC-49A963361F90}</Project>
       <Name>CanvasScriptServer.MVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CanvasScriptServer\CanvasScriptServer.csproj">
+      <Project>{32238892-7e2b-465a-8242-51c1590fb748}</Project>
+      <Name>CanvasScriptServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

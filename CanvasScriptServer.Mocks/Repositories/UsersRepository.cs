@@ -44,31 +44,33 @@ namespace CanvasScriptServer.Mocks
 {
     public class UsersRepository : CanvasScriptServer.UserRepository
     {
-        static List<IUser> _Users = new List<IUser>();
+        CanvasScriptRepository _Scripts;
+        System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
 
-        public override void AddToCollection(IUser entity)
+        public UsersRepository(CanvasScriptRepository Scripts)
         {
-            _Users.Add(new User(entity));
+            _Scripts = Scripts;
         }
+
+
+        List<IUser> _Users = new List<IUser>();
+
 
         public override IQueryable<IUser> BoCollection
         {
             get { return _Users.AsQueryable(); }
         }
 
-        public override IUser CreateBo()
-        {
-            var user = new User();
-            user.Scripts = new CanvasScript[]{};
-            return user;
-        }
 
-        public override IUser CreateBoAndAddToCollection()
+        public override IUser CreateBoAndAddToCollection(string Name)
         {
-            var entity = new User();
-            _Users.Add(entity);
+            var entity = new User(_Scripts);
+            entity.Name = Name;
+
+            cudActions.Enqueue(() => _Users.Add(entity));
+            
             return entity;
-        }
+        } 
 
         public override Func<IUser, bool> GetBoIDTest(string id)
         {
@@ -80,14 +82,26 @@ namespace CanvasScriptServer.Mocks
             throw new NotImplementedException();
         }
 
-        public override void RemoveFromCollection(IUser entity)
+        public override void RemoveFromCollection(string Name)
         {
-            var rec = _Users.Find(r => r.Name == entity.Name);
-            _Users.Remove(rec);
+            var rec = _Users.Find(r => r.Name == Name);
+            cudActions.Enqueue(() => {
+                var myScriptNames = _Scripts.BoCollection.Where(r => r.User.Name == Name).Select(r => r.Name);
+                foreach (var scriptName in myScriptNames)
+                {
+                    _Scripts.RemoveFromCollection(scriptName);
+                }
+                _Users.Remove(rec); 
+
+            });
         }
 
         public override void SubmitChanges()
         {
+            while (cudActions.Any())
+            {
+                cudActions.Dequeue()();
+            }
             Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" +_Users.Count);
         }
 

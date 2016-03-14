@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CanvasScriptDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CanvasScriptDBStoreContainer">
+    <EntitySet Name="UsersSet" EntityType="CanvasScriptDB.Store.UsersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ScriptsSet" EntityType="CanvasScriptDB.Store.ScriptsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserNamesSet" EntityType="CanvasScriptDB.Store.UserNamesSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UsersScripts" Association="CanvasScriptDB.Store.UsersScripts">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="Scripts" EntitySet="ScriptsSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserNamesUsers" Association="CanvasScriptDB.Store.UserNamesUsers">
+      <End Role="UserNames" EntitySet="UserNamesSet" />
+      <End Role="Users" EntitySet="UsersSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScriptsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ScriptAsJson" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Created" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserNamesSet">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UsersScripts">
+    <End Role="Users" Type="CanvasScriptDB.Store.UsersSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Scripts" Type="CanvasScriptDB.Store.ScriptsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Scripts">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserNamesUsers">
+    <End Role="UserNames" Type="CanvasScriptDB.Store.UserNamesSet" Multiplicity="*" />
+    <End Role="Users" Type="CanvasScriptDB.Store.UsersSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserNames">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CanvasScriptDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CanvasScriptDBContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UsersSet" EntityType="CanvasScriptDB.Users" />
+          <EntitySet Name="ScriptsSet" EntityType="CanvasScriptDB.Scripts" />
+          <AssociationSet Name="UsersScripts" Association="CanvasScriptDB.UsersScripts">
+            <End Role="Users" EntitySet="UsersSet" />
+            <End Role="Scripts" EntitySet="ScriptsSet" />
+          </AssociationSet>
+          <EntitySet Name="UserNamesSet" EntityType="CanvasScriptDB.UserNames" />
+          <AssociationSet Name="UserNamesUsers" Association="CanvasScriptDB.UserNamesUsers">
+            <End Role="UserNames" EntitySet="UserNamesSet" />
+            <End Role="Users" EntitySet="UsersSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Scripts" Relationship="CanvasScriptDB.UsersScripts" FromRole="Users" ToRole="Scripts" />
+          <NavigationProperty Name="Name" Relationship="CanvasScriptDB.UserNamesUsers" FromRole="Users" ToRole="UserNames" />
+        </EntityType>
+        <EntityType Name="Scripts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="ScriptAsJson" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="CanvasScriptDB.UsersScripts" FromRole="Scripts" ToRole="Users" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="UsersScripts">
+          <End Type="CanvasScriptDB.Users" Role="Users" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CanvasScriptDB.Scripts" Role="Scripts" Multiplicity="*" >
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Scripts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserNames">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="256" />
+          <NavigationProperty Name="User" Relationship="CanvasScriptDB.UserNamesUsers" FromRole="UserNames" ToRole="Users" />
+        </EntityType>
+        <Association Name="UserNamesUsers">
+          <End Type="CanvasScriptDB.UserNames" Role="UserNames" Multiplicity="1" />
+          <End Type="CanvasScriptDB.Users" Role="Users" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CanvasScriptDBStoreContainer" CdmEntityContainer="CanvasScriptDBContainer">
+    <EntitySetMapping Name="UsersSet">
+      <EntityTypeMapping TypeName="IsTypeOf(CanvasScriptDB.Users)">
+        <MappingFragment StoreEntitySet="UsersSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScriptsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(CanvasScriptDB.Scripts)">
+        <MappingFragment StoreEntitySet="ScriptsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ScriptAsJson" ColumnName="ScriptAsJson" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserNamesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(CanvasScriptDB.UserNames)">
+        <MappingFragment StoreEntitySet="UserNamesSet">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserNamesUsers" TypeName="CanvasScriptDB.UserNamesUsers" StoreEntitySet="UserNamesSet">
+      <EndProperty Name="Users">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="UserNames">
+        <ScalarProperty Name="Name" ColumnName="Name" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

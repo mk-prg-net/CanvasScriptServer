@@ -40,8 +40,8 @@ namespace CanvasScriptServer.MVC.Controllers
 
         public ActionResult Create(string username, string scriptname)
         {
-            var newList = unitOfWork.CreateScript(username, scriptname);
-            unitOfWork.SaveChanges();
+            var newList = unitOfWork.createScript(username, scriptname);
+            unitOfWork.saveChanges();
 
             var Model = CreateIndexViewModel(username);
             return RedirectToAction("Index", new { username = username }); //View("Index", Model);
@@ -51,15 +51,15 @@ namespace CanvasScriptServer.MVC.Controllers
         public ActionResult Delete(string username, string scriptname)
         {
             unitOfWork.deleteScript(scriptname);
-            unitOfWork.SaveChanges();
+            unitOfWork.saveChanges();
 
             var Model = CreateIndexViewModel(username);
             return View("Index", Model);
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string userName, string scriptName)
         {
-            var script = unitOfWork.Scripts.GetBo(id);
+            var script = unitOfWork.Scripts.BoCollection.First(r => r.Name == scriptName && r.User.Name == userName);
 
             return View(script);
         }

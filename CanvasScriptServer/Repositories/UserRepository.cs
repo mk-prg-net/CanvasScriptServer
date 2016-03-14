@@ -42,19 +42,13 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class UserRepository : mko.BI.Repositories.BoCoBase<IUser, string>        
+    public abstract class UserRepository : mko.BI.Repositories.BoCo<IUser, string>        
     {
         public class SortName : mko.BI.Repositories.DefSortOrderCol<IUser, string>
         {
             public SortName(bool Descending) : base(r => r.Name, Descending) { }
         }
 
-        /// <summary>
-        /// Liefert true, wenn  der Benutzer im Repo vorhanden ist
-        /// </summary>
-        /// <param name="?"></param>
-        /// <returns></returns>
-        public abstract bool Any(string username);
 
         public UserRepository()
             : base(new SortName(true)) { }

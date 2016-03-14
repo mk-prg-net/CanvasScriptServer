@@ -44,32 +44,35 @@ namespace CanvasScriptServer.Mocks
 {
     public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository
     {
-        static List<ICanvasScript> _Scripts = new List<ICanvasScript>();
+        //static List<ICanvasScript> _Scripts = new List<ICanvasScript>();
+        List<ICanvasScript> _Scripts = new List<ICanvasScript>();
 
-        public override void AddToCollection(ICanvasScript entity)
-        {
-            _Scripts.Add(entity);
-        }
+        System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
+
 
         public override IQueryable<ICanvasScript> BoCollection
         {
             get { return _Scripts.AsQueryable(); }
         }
 
-        public override ICanvasScript CreateBo()
-        {            
-            return new CanvasScript();
-        }
 
-        public override ICanvasScript CreateBoAndAddToCollection()
+        public override ICanvasScript CreateBoAndAddToCollection(string Name)
         {
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(Name));
+
             var entity = new CanvasScript();
-            _Scripts.Add(entity);
+            entity.Name = Name;
+            entity.Created = DateTime.Now;
+
+            cudActions.Enqueue(() => _Scripts.Add(entity));
+            
             return entity;
         }
 
         public override Func<ICanvasScript, bool> GetBoIDTest(string id)
         {
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id));
+
             return r => r.Name == id;
         }
 
@@ -78,13 +81,21 @@ namespace CanvasScriptServer.Mocks
             throw new NotImplementedException();
         }
 
-        public override void RemoveFromCollection(ICanvasScript entity)
+        public override void RemoveFromCollection(string Name)
         {
-            _Scripts.Remove(entity);
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(Name));
+
+            var entity = _Scripts.Single(r => r.Name == Name);
+            
+            cudActions.Enqueue(() => _Scripts.Remove(entity));
         }
 
         public override void SubmitChanges()
         {
+            while (cudActions.Any())
+            {
+                cudActions.Dequeue()();
+            }
             Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" + _Scripts.Count);   
         }
 

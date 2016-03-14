@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Microsoft.Practices.Unity;
 
+using System.Linq;
+
 namespace CanvasScriptServer.Mocks
 {
     public class User : IUser
@@ -15,8 +17,19 @@ namespace CanvasScriptServer.Mocks
         /// User hat zwei Konstruktoren. Diese Mehrdeutigkeit wird mittels InjectionConstruktor
         /// Attribut aufgelöst
         /// </summary>
-        [InjectionConstructor]
         public User() { }
+
+        [InjectionConstructor]
+        public User(string name)
+        {
+            Name = name;
+        }
+
+        public User(CanvasScriptRepository ScriptsRepository)
+        {
+            _ScriptRepository = ScriptsRepository;
+        }
+        CanvasScriptRepository _ScriptRepository;
 
         public User(IUser user)
         {
@@ -26,15 +39,21 @@ namespace CanvasScriptServer.Mocks
 
         public string Name
         {
-            get;            
+            get;
             set;
         }
 
         public IEnumerable<ICanvasScript> Scripts
         {
-            get;
-            set;
+            get
+            {
+                return _ScriptRepository.BoCollection.Where(r => r.User.Name == Name).ToArray();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
-        
+
     }
 }

@@ -50,8 +50,8 @@ namespace CanvasScriptServer.MVC.Controllers
             else
             {
                 // speichern
-                unitOfWork.CreateUser(NewUser.Name);
-                unitOfWork.SaveChanges();
+                unitOfWork.createUser(NewUser.Name);
+                unitOfWork.saveChanges();
 
                 return View("Index", GetUsers(true));
             }
@@ -62,7 +62,7 @@ namespace CanvasScriptServer.MVC.Controllers
         public ActionResult Delete(string username)
         {
             unitOfWork.deleteUser(username);
-            unitOfWork.SaveChanges();
+            unitOfWork.saveChanges();
             
             return View("Index", GetUsers(true));
         }
