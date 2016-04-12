@@ -51,7 +51,8 @@ namespace CanvasScriptServer.MVC.App_Start
             //container.RegisterType<CanvasScriptServer.UserRepository, Mocks.UsersRepository>(new ContainerControlledLifetimeManager());
             //container.RegisterType<CanvasScriptServer.CanvasScriptRepository, Mocks.CanvasScriptsRepository>(new ContainerControlledLifetimeManager());
 
-            container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.Mocks.CanvasScriptServerUnitOfWork>();
+            //container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.Mocks.CanvasScriptServerUnitOfWork>();
+            container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.DB.CanvasScriptDBContainer>();
 
         }
     }

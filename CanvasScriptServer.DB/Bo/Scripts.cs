@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.DB
 {
-    partial class Scripts : ICanvasScript
+    partial class Scripts : ICanvasScript, ICanvasScriptBuilder
     {
 
-        IUser ICanvasScript.User
+        IUser ICanvasScript.Author
         {
             get
             {
                 return User;
             }
-            set
-            {
-                
-            }
         }
 
+        void ICanvasScriptBuilder.setScript(string Script)
+        {
+            this.ScriptAsJson = Script;
+        }
     }
 }

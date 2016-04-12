@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CanvasScriptServer.DB
+namespace CanvasScriptServer
 {
-    public class Class1
+    public interface ICanvasScriptBuilder
     {
+        void setScript(string Script);
     }
 }

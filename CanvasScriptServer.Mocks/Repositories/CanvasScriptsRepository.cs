@@ -44,50 +44,53 @@ namespace CanvasScriptServer.Mocks
 {
     public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository
     {
-        //static List<ICanvasScript> _Scripts = new List<ICanvasScript>();
-        List<ICanvasScript> _Scripts = new List<ICanvasScript>();
+        List<CanvasScript> _ScriptList = new List<CanvasScript>();
 
         System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
 
 
         public override IQueryable<ICanvasScript> BoCollection
         {
-            get { return _Scripts.AsQueryable(); }
+            get { return _ScriptList.AsQueryable(); }
         }
 
-
-        public override ICanvasScript CreateBoAndAddToCollection(string Name)
+        public readonly string DefaultScript = "[{\"beginPath\": \"true\"}, {\"strokeStyle\": { \"Style\": \"rgb(255, 255, 0)\"}}, {\"moveTo\": {\"X\": 0, \"Y\":0}}, {\"lineTo\": {\"X\": 100, \"Y\":100}}, { \"closePath\": true}, {\"stroke\": true} ]";
+        
+        internal void CreateBoAndAddToCollection(IUser user, string NameOfScript)
         {
-            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(Name));
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(NameOfScript));
 
             var entity = new CanvasScript();
-            entity.Name = Name;
-            entity.Created = DateTime.Now;
+            entity._Name = NameOfScript;
+            entity._Created = DateTime.Now;
+            entity._Author = user;
+            entity._ScriptAsJson = DefaultScript;
+            cudActions.Enqueue(() => _ScriptList.Add(entity));                
+        }
 
-            cudActions.Enqueue(() => _Scripts.Add(entity));
+        public override Func<ICanvasScript, bool> GetBoIDTest(CanvasScriptKey id)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
+
+            return r => r.Author.Name == id.Username && r.Name == id.Scriptname;
+        }
+
+
+        Func<CanvasScript, bool> GetBoIDTestIntern(CanvasScriptKey id)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
+
+            return r => r.Author.Name == id.Username && r.Name == id.Scriptname;
+        }
+
+
+        public override void RemoveFromCollection(CanvasScriptKey id)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
+
+            var entity = _ScriptList.Single(GetBoIDTestIntern(id));
             
-            return entity;
-        }
-
-        public override Func<ICanvasScript, bool> GetBoIDTest(string id)
-        {
-            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id));
-
-            return r => r.Name == id;
-        }
-
-        public override void RemoveAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RemoveFromCollection(string Name)
-        {
-            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(Name));
-
-            var entity = _Scripts.Single(r => r.Name == Name);
-            
-            cudActions.Enqueue(() => _Scripts.Remove(entity));
+            cudActions.Enqueue(() => _ScriptList.Remove(entity));
         }
 
         public override void SubmitChanges()
@@ -96,12 +99,23 @@ namespace CanvasScriptServer.Mocks
             {
                 cudActions.Dequeue()();
             }
-            Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" + _Scripts.Count);   
+            Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" + _ScriptList.Count);   
         }
 
-        public override bool Any(string scriptname)
+        public override bool Any(CanvasScriptKey id)
         {
-            return _Scripts.Any(r => r.Name == scriptname);
+            return _ScriptList.Any(GetBoIDTest(id));
+        }
+
+
+        public override ICanvasScript GetBo(CanvasScriptKey id)
+        {
+            return _ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname);
+        }
+
+        public override ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id)
+        {
+            return new Bo.CanvasScriptBuilder(_ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname));
         }
     }
 }

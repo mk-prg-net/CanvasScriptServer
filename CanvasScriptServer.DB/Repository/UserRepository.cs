@@ -26,18 +26,17 @@ namespace CanvasScriptServer.DB.Repository
         public override IQueryable<IUser> BoCollection
         {
             get { 
-                return Orm.UsersSet;
+                return Orm.UsersSet.ToArray().AsQueryable();
             }
         }
 
 
-        public override IUser CreateBoAndAddToCollection(string userName)
+        public override void CreateBoAndAddToCollection(string userName)
         {
             var e = Orm.UsersSet.Create();
             e.Name = Orm.UserNamesSet.Create();
             e.Name.Name = userName;
             Orm.UsersSet.Add(e);
-            return e;
         }
 
         public override Func<IUser, bool> GetBoIDTest(string id)
@@ -64,6 +63,16 @@ namespace CanvasScriptServer.DB.Repository
         public override void SubmitChanges()
         {
             Orm.SaveChanges();
+        }
+
+        public override IUser GetBo(string id)
+        {
+            var userName = Orm.UserNamesSet.Find(id);
+            if(userName != null){
+                return userName.User;
+            } else {
+                throw new ArgumentOutOfRangeException("Der Benutzer mit der ID" + id + " existiert nicht");
+            }           
         }
     }
 }

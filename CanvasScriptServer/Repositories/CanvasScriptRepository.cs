@@ -6,11 +6,11 @@
 //
 //  Projekt.......: CanvasScriptServer
 //  Name..........: CanvasScriptRepository.cs
-//  Aufgabe/Fkt...: Repository der Canvas- Scripte
-//                  
-//
-//
-//
+//  Aufgabe/Fkt...: Repository der Canvas- Scripte.
+//                  Diese Implementiert lediglich das Filtern sowie den 
+//                  Zugriff auf einzelne Scripte, nicht jedoch das anlegen und löschen     
+//                  von Scripten. Anlegen und löschen sind nur im Zusammenhang mit der 
+//                  Users- Collection sinnvoll.  Sie werden in der UnitOfWork implementiert
 //
 //<unit_environment>
 //------------------------------------------------------------------
@@ -41,7 +41,11 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class CanvasScriptRepository : mko.BI.Repositories.BoCo<ICanvasScript, string>        
+    public abstract class CanvasScriptRepository : mko.BI.Repositories.BoCo<ICanvasScript>, 
+        mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, CanvasScriptKey>,
+        mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, CanvasScriptKey>,
+        mko.BI.Repositories.Interfaces.IRemove<CanvasScriptKey>,
+        mko.BI.Repositories.Interfaces.ISubmitChanges
     {
         public class SortName : mko.BI.Repositories.DefSortOrderCol<ICanvasScript, string>
         {
@@ -51,6 +55,22 @@ namespace CanvasScriptServer
         public CanvasScriptRepository()
             : base(new SortName(true)) { }
 
+        // mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, string>,
+        public abstract bool Any(CanvasScriptKey id);
+        public abstract ICanvasScript GetBo(CanvasScriptKey id);
+        public abstract Func<ICanvasScript, bool> GetBoIDTest(CanvasScriptKey id);
 
+        // mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, string>
+        public abstract ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id);
+
+        // mko.BI.Repositories.Interfaces.IRemove<ICanvasScript>
+        public virtual void RemoveAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public abstract void RemoveFromCollection(CanvasScriptKey id);
+
+        public abstract void SubmitChanges();
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/13/2016 22:15:45
+-- Date Created: 03/15/2016 13:37:09
 -- Generated from EDMX file: C:\Users\marti_000\Documents\prj\NET\2016-03-07-München-Net-modern\CanvasScriptServer\CanvasScriptServer.DB\CanvasScriptDB.edmx
 -- --------------------------------------------------
 
@@ -54,7 +54,8 @@ CREATE TABLE [dbo].[ScriptsSet] (
     [Name] nvarchar(max)  NOT NULL,
     [ScriptAsJson] nvarchar(max)  NOT NULL,
     [UserId] int  NOT NULL,
-    [Created] datetime  NOT NULL
+    [Created] datetime  NOT NULL,
+    [Modified] datetime  NOT NULL
 );
 GO
 

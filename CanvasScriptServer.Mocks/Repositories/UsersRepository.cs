@@ -62,14 +62,12 @@ namespace CanvasScriptServer.Mocks
         }
 
 
-        public override IUser CreateBoAndAddToCollection(string Name)
+        public override void CreateBoAndAddToCollection(string Name)
         {
             var entity = new User(_Scripts);
             entity.Name = Name;
 
-            cudActions.Enqueue(() => _Users.Add(entity));
-            
-            return entity;
+            cudActions.Enqueue(() => _Users.Add(entity));            
         } 
 
         public override Func<IUser, bool> GetBoIDTest(string id)
@@ -86,10 +84,10 @@ namespace CanvasScriptServer.Mocks
         {
             var rec = _Users.Find(r => r.Name == Name);
             cudActions.Enqueue(() => {
-                var myScriptNames = _Scripts.BoCollection.Where(r => r.User.Name == Name).Select(r => r.Name);
+                var myScriptNames = _Scripts.BoCollection.Where(r => r.Author.Name == Name).Select(r => r.Name);
                 foreach (var scriptName in myScriptNames)
                 {
-                    _Scripts.RemoveFromCollection(scriptName);
+                    _Scripts.RemoveFromCollection(CanvasScriptKey.Create(Name, scriptName));
                 }
                 _Users.Remove(rec); 
 
@@ -109,6 +107,11 @@ namespace CanvasScriptServer.Mocks
         public override bool Any(string username)
         {
             return _Users.Any(r => r.Name == username);
+        }
+
+        public override IUser GetBo(string id)
+        {
+            return _Users.Find(r => r.Name == id);
         }
     }
 }

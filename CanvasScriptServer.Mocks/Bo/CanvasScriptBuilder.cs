@@ -2,12 +2,12 @@
 //----------------------------------------------------------------
 //
 // Martin Korneffel: IT Beratung/Softwareentwicklung
-// Stuttgart, den 8.3.2016
+// Stuttgart, den 15.3.2016
 //
-//  Projekt.......: CanvasScriptServer
-//  Name..........: IUser.cs
-//  Aufgabe/Fkt...: Schnittstelle der Benutzer- Geschäftsobjekte
-//                  
+//  Projekt.......: CanvasScriptServer.Mocks
+//  Name..........: CanvasScriptBuilder.cs
+//  Aufgabe/Fkt...: Implementierung des ScriptBuilders. Dient zum speichern von
+//                  Änderungen in Skripten
 //
 //
 //
@@ -33,19 +33,29 @@
 //</unit_history>
 //</unit_header>        
         
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CanvasScriptServer
+namespace CanvasScriptServer.Mocks.Bo
 {
-    public interface IUser
+    public class CanvasScriptBuilder : ICanvasScriptBuilder
     {
-        string Name { get;}
 
-        IEnumerable<ICanvasScript> Scripts { get; }
+        public CanvasScriptBuilder(CanvasScript script)
+        {
+            _script = script;
+        }
+
+        CanvasScript _script;      
+
+        public void setScript(string Script)
+        {
+            _script._ScriptAsJson = Script;
+            _script._Modified = DateTime.Now;
+
+        }
     }
 }

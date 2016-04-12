@@ -19,6 +19,7 @@ namespace CanvasScriptServer.DB
         public string ScriptAsJson { get; set; }
         public int UserId { get; set; }
         public System.DateTime Created { get; set; }
+        public System.DateTime Modified { get; set; }
     
         public virtual Users User { get; set; }
     }

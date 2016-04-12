@@ -20,6 +20,9 @@ namespace CanvasScriptServer.MVC.Controllers
 
         IQueryable<IUser> GetUsers(bool OrderUpward)
         {
+            //mko.BI.Repositories.DefSortOrder<IUser> order = new CanvasScriptServer.UserRepository.SortName(!OrderUpward);
+            //unitOfWork.Users.DefSortOrders(order);
+            //return unitOfWork.Users.GetFilteredAndSortedListOfBo();
             if (OrderUpward)
                 return unitOfWork.Users.GetFilteredListOfBo().OrderBy(r => r.Name);
             else
@@ -51,7 +54,7 @@ namespace CanvasScriptServer.MVC.Controllers
             {
                 // speichern
                 unitOfWork.createUser(NewUser.Name);
-                unitOfWork.saveChanges();
+                unitOfWork.SubmitChanges();
 
                 return View("Index", GetUsers(true));
             }
@@ -62,7 +65,7 @@ namespace CanvasScriptServer.MVC.Controllers
         public ActionResult Delete(string username)
         {
             unitOfWork.deleteUser(username);
-            unitOfWork.saveChanges();
+            unitOfWork.SubmitChanges();
             
             return View("Index", GetUsers(true));
         }

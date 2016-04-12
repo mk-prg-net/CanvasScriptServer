@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public interface ICanvasScriptServerUnitOfWork
+    public interface ICanvasScriptServerUnitOfWork : IDisposable, mko.BI.Repositories.Interfaces.ISubmitChanges
     {
         /// <summary>
         /// In UnitOfWork spielt das Repository die Rolle einer filterbare Liste der Scriptautoren. 
@@ -24,18 +24,14 @@ namespace CanvasScriptServer
             get;
         }
 
-        /// <summary>
-        /// Änderungen durch Transaktionen, die für das UnitOfWork 
-        /// </summary>
-        void saveChanges();
 
-        IUser createUser(string Name);
+        void createUser(string Name);
 
-        ICanvasScript createScript(string Username, string NameOfScript);
+        void createScript(string Authorname, string NameOfScript);
 
-        void deleteUser(string username);
+        void deleteUser(string Authorname);
 
-        void deleteScript(string scriptName);
+        void deleteScript(string Authorname, string scriptName);
 
     }
 }

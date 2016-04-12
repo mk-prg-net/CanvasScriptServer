@@ -26,25 +26,18 @@ namespace CanvasScriptServer.Mocks
         static Mocks.CanvasScriptsRepository _Scripts;
         static Mocks.UsersRepository _Users;
 
-        readonly string DefaultScript =  "[{\"beginPath\": \"true\"}, {\"strokeStyle\": { \"Style\": \"rgb(255, 255, 0)\"}}, {\"moveTo\": {\"X\": 0, \"Y\":0}}, {\"lineTo\": {\"X\": 100, \"Y\":100}}, { \"closePath\": true}, {\"stroke\": true} ]";
 
-        public ICanvasScript createScript(string Username, string NameOfScript)
+        public void createScript(string Authorname, string NameOfScript)
         {
             // Der Benutzer muss bereits existieren
-            if (Users.Any(Username))
+            if (Users.Any(Authorname))
             {
-                var user = Users.GetBo(Username);
-                var newScript = Scripts.CreateBoAndAddToCollection(NameOfScript);                
-                newScript.User = user;
-                newScript.Created = DateTime.Now;
-                newScript.ScriptAsJson = DefaultScript;
-                //user.Scripts = user.Scripts.Concat(new ICanvasScript[] { newScript }).ToArray();
-
-                return newScript;
+                var user = Users.GetBo(Authorname);
+                _Scripts.CreateBoAndAddToCollection(user, NameOfScript);                
             }
             else
             {
-                throw new Exception("Scriptautor " + Username + " existiert nicht");
+                throw new Exception("Scriptautor " + Authorname + " existiert nicht");
             }            
         }
 
@@ -62,10 +55,10 @@ namespace CanvasScriptServer.Mocks
             }
         }
 
-        public void deleteScript(string scriptName)
+        public void deleteScript(string Authorname, string scriptName)
         {
             // Script aus den Scripten nehmen, die dem Benutzer zugeordnet sind
-            Scripts.RemoveFromCollection(scriptName);
+            Scripts.RemoveFromCollection(CanvasScriptKey.Create(Authorname, scriptName));
         }
 
         public UserRepository Users
@@ -78,16 +71,16 @@ namespace CanvasScriptServer.Mocks
             get { return _Scripts; }
         }
 
-        public void saveChanges()
+        public void SubmitChanges()
         {
             Users.SubmitChanges();
             Scripts.SubmitChanges();
             Debug.WriteLine("In CanvasScriptServerUnitOfWorks wurden die Änderungen übernommen");
         }
 
-        public IUser createUser(string Name)
+        public void createUser(string Name)
         {
-            return Users.CreateBoAndAddToCollection(Name);            
+            Users.CreateBoAndAddToCollection(Name);            
         }
 
         public void deleteUser(string username)
@@ -95,15 +88,21 @@ namespace CanvasScriptServer.Mocks
             if (Users.Any(username))
             {
                 // Alle Scripte vom Benutzer löschen
-                var scriptNames = Scripts.BoCollection.Where(r => r.User.Name == username).Select(r => r.Name);
+                var scriptNames = Scripts.BoCollection.Where(r => r.Author.Name == username).Select(r => r.Name);
                 foreach (var name in scriptNames)
                 {
-                    Scripts.RemoveFromCollection(name);
+                    Scripts.RemoveFromCollection(CanvasScriptKey.Create(username, name));
                 }
 
                 // Benutzer löschen
                 Users.RemoveFromCollection(username);
             }
         }
+
+        public void Dispose()
+        {
+            Debug.WriteLine("CanvasScriptServerUnitOfWork wird freigegeben");
+        }
+
     }
 }

@@ -4,15 +4,15 @@
 @model CanvasScriptServer.ICanvasScript
 
 @{
-    ViewBag.Title = "Canvas Painter: edit " + Model.Name + " von " + Model.User.Name;
+    ViewBag.Title = "Canvas Painter: edit " + Model.Name + " von " + Model.Author.Name;
 }
 
 <form>
     <h1>@ViewBag.Title</h1>
-    @Html.ActionLink("Zurück", "Index", new { username=Model.User.Name})
+    @Html.ActionLink("Zurück", "Index", new { username=Model.Author.Name})
 
     @* Name des Benutzers sichern *@
-    <input type="hidden" id="UserName" value="@Model.User.Name" />
+    <input type="hidden" id="UserName" value="@Model.Author.Name" />
 
     @* Namen des Scriptes sichern *@
     <input type="hidden" id="ScriptName" value="@Model.Name" />

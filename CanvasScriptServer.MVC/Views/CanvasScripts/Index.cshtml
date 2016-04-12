@@ -24,7 +24,7 @@
                 @script.Name
             </td>
             <td>
-                <a href="@Url.RouteUrl("cvs", new{action="Edit", userName= script.User.Name, scriptName= script.Name})">
+                <a href="@Url.RouteUrl("cvs", new{action="Edit", userName= script.Author.Name, scriptName= script.Name})">
                     <span class="glyphicon glyphicon-pencil"></span> edit
                 </a>
             </td>
@@ -34,7 +34,7 @@
                 </a>
             </td>
             <td>
-                <a href="@Url.RouteUrl("cvs", new{action="Delete",  username = Model.User.Name, scriptname = script.Name})">
+                <a href="@Url.RouteUrl("cvs", new{action="Delete",  username = script.Author.Name, scriptname = script.Name})">
                     <span class="glyphicon glyphicon-remove"></span> löschen
                 </a>
             </td>

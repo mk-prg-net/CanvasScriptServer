@@ -7,10 +7,11 @@ namespace ChangeTrackingTest
     public class TrackingTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ChangeTrackingMitKlassenLibVomAuthor()
         {
+            // Die Klasse MailinAddressCompanyWithChangeTracking ist abgeleitet von der mko.BI.ChangeTracking.BoWithChangeTracking 
+            // aus der mk-prg-net.lib Projektmappe (mko.BI) 
             var mkNetPrg = new mko.BI.Bo.Addresses.MailingAddressCompanyWithChangeTracking();
-
 
             mkNetPrg.CompanyName = "mko IT";
             mkNetPrg.City = "Stuttgart";
@@ -18,8 +19,11 @@ namespace ChangeTrackingTest
             mkNetPrg.PostalCode = "70599";
             mkNetPrg.Street = "Hans-Kächele-Str. 11";
 
-            var copyAdr = new mko.BI.Bo.Addresses.MailingAddressCompanyWithChangeTracking();
-            mkNetPrg.UpdateExternalBo(copyAdr);
+
+            // Alle Änderungen wurden aufgezeichnet, und können erneut auf einem anderen MailingAddress- Objekt 
+            // angewendet werden
+            var copyAdr = new mko.BI.Bo.Addresses.MailingAddressCompany();
+            mkNetPrg.UpdateExternalBo(copyAdr, );
 
             Assert.AreEqual("mko IT", copyAdr.CompanyName);
             Assert.AreEqual("70599", copyAdr.PostalCode);

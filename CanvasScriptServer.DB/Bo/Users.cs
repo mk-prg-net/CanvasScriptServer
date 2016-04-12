@@ -14,10 +14,6 @@ namespace CanvasScriptServer.DB
             {
                 return Scripts.ToArray();
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
         }
 
 
@@ -26,10 +22,6 @@ namespace CanvasScriptServer.DB
             get
             {
                 return Name.Name;
-            }
-            set
-            {
-                throw new NotImplementedException();
             }
         }
     }

@@ -42,7 +42,11 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class UserRepository : mko.BI.Repositories.BoCo<IUser, string>        
+    public abstract class UserRepository : mko.BI.Repositories.BoCo<IUser>,
+        mko.BI.Repositories.Interfaces.ICreateUpdate<string>,
+        mko.BI.Repositories.Interfaces.IRemove<string>,
+        mko.BI.Repositories.Interfaces.IGetBo<IUser, string>
+
     {
         public class SortName : mko.BI.Repositories.DefSortOrderCol<IUser, string>
         {
@@ -52,6 +56,20 @@ namespace CanvasScriptServer
 
         public UserRepository()
             : base(new SortName(true)) { }
+
+
+        // mko.BI.Repositories.Interfaces.ICreateUpdate<ICanvasScript>,
+        public abstract void CreateBoAndAddToCollection(string id);
+        public abstract void SubmitChanges();
+
+        // mko.BI.Repositories.Interfaces.IRemove<ICanvasScript>,
+        public abstract void RemoveAll();        
+        public abstract void RemoveFromCollection(string id);
+
+        // mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, string>,
+        public abstract bool Any(string id);
+        public abstract IUser GetBo(string id);
+        public abstract Func<IUser, bool> GetBoIDTest(string id);
 
     }
 }

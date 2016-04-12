@@ -1,4 +1,40 @@
-﻿using System;
+﻿
+//<unit_header>
+//----------------------------------------------------------------
+//
+// Martin Korneffel: IT Beratung/Softwareentwicklung
+// Stuttgart, den 8.3.2016
+//
+//  Projekt.......: CanvasScriptServer.MVC
+//  Name..........: CanvasScriptWebApiController.cs
+//  Aufgabe/Fkt...: Implementiert das Backend für die Canvas- Edit Single Page Application
+//                  
+//
+//
+//
+//
+//<unit_environment>
+//------------------------------------------------------------------
+//  Zielmaschine..: PC 
+//  Betriebssystem: Windows 7 mit .NET 4.5
+//  Werkzeuge.....: Visual Studio 2013
+//  Autor.........: Martin Korneffel (mko)
+//  Version 1.0...: 
+//
+// </unit_environment>
+//
+//<unit_history>
+//------------------------------------------------------------------
+//
+//  Version.......: 1.1
+//  Autor.........: Martin Korneffel (mko)
+//  Datum.........: 
+//  Änderungen....: 
+//
+//</unit_history>
+//</unit_header>        
+        
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -19,7 +55,7 @@ namespace CanvasScriptServer.MVC.Controllers
 
         public string Get(string userName, string scriptName)
         {
-            var script = unitOfWork.Scripts.BoCollection.First(r => r.User.Name == userName && r.Name == scriptName);
+            var script = unitOfWork.Scripts.GetBo(CanvasScriptKey.Create(userName, scriptName));
             if(script == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             return script.ScriptAsJson;
@@ -27,8 +63,8 @@ namespace CanvasScriptServer.MVC.Controllers
 
         public string Post([FromBody] Models.CanvasScriptsMgmt.ScriptSimple scriptFromClient)
         {
-            var script = unitOfWork.Scripts.BoCollection.First(r => r.User.Name == scriptFromClient.userName && r.Name == scriptFromClient.scriptName);
-            script.ScriptAsJson = scriptFromClient.scriptJson;
+            var scriptBuilder = unitOfWork.Scripts.GetBoBuilder(CanvasScriptKey.Create(scriptFromClient.userName, scriptFromClient.scriptName));
+            scriptBuilder.setScript(scriptFromClient.scriptJson);
             unitOfWork.Scripts.SubmitChanges();
 
             return scriptFromClient.scriptJson;

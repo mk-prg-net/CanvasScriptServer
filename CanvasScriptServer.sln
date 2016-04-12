@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCuttingConcerns", "Cro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCuttingConcerns.Test", "CrossCuttingConcerns.Test\CrossCuttingConcerns.Test.csproj", "{7A3F2A3F-9BFD-4ECD-A9F5-625163AEED47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTrackingTest", "ChangeTrackingTest\ChangeTrackingTest.csproj", "{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VB.Threads.AsyncWithDelegates", "VB.Threads.AsyncWithDelegates\VB.Threads.AsyncWithDelegates.vbproj", "{BAE7A3F7-982E-4A5D-BDC0-764B3DBBC6AC}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VB.Threads.NET45.AsyncAwait", "VB.Threads.NET45.AsyncAwait\VB.Threads.NET45.AsyncAwait.vbproj", "{4D1FFF60-7487-4C90-8E3B-D0EE1CA03707}"
@@ -267,36 +265,6 @@ Global
 		{7A3F2A3F-9BFD-4ECD-A9F5-625163AEED47}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7A3F2A3F-9BFD-4ECD-A9F5-625163AEED47}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
 		{7A3F2A3F-9BFD-4ECD-A9F5-625163AEED47}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Individual|Any CPU.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Individual|Any CPU.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Individual|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Individual|Mixed Platforms.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Individual|x86.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Realease_mit_Trace|Any CPU.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Realease_mit_Trace|Any CPU.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Realease_mit_Trace|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Realease_mit_Trace|Mixed Platforms.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Realease_mit_Trace|x86.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.Release|x86.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.SiemensKonfig|Any CPU.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.SiemensKonfig|Any CPU.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.SiemensKonfig|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.SiemensKonfig|Mixed Platforms.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.SiemensKonfig|x86.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.unsere eigene konfiguration|Any CPU.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.unsere eigene konfiguration|Any CPU.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
-		{19F85AB6-ECFC-4FE1-8DAD-523E4851904A}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
 		{BAE7A3F7-982E-4A5D-BDC0-764B3DBBC6AC}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{BAE7A3F7-982E-4A5D-BDC0-764B3DBBC6AC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{BAE7A3F7-982E-4A5D-BDC0-764B3DBBC6AC}.Debug|Mixed Platforms.Build.0 = Debug|x86

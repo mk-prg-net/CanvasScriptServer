@@ -12,18 +12,6 @@ namespace CanvasScriptServer.Mocks
 {
     public class User : IUser
     {
-        /// <summary>
-        /// Konstruktor, der bei Dependency- injection mittels Unity herangezogen wird.
-        /// User hat zwei Konstruktoren. Diese Mehrdeutigkeit wird mittels InjectionConstruktor
-        /// Attribut aufgelöst
-        /// </summary>
-        public User() { }
-
-        [InjectionConstructor]
-        public User(string name)
-        {
-            Name = name;
-        }
 
         public User(CanvasScriptRepository ScriptsRepository)
         {
@@ -31,11 +19,11 @@ namespace CanvasScriptServer.Mocks
         }
         CanvasScriptRepository _ScriptRepository;
 
-        public User(IUser user)
-        {
-            Name = user.Name;
-            Scripts = user.Scripts;
-        }
+        //public User(IUser user)
+        //{
+        //    Name = user.Name;
+        //    Scripts = user.Scripts;
+        //}
 
         public string Name
         {
@@ -47,11 +35,7 @@ namespace CanvasScriptServer.Mocks
         {
             get
             {
-                return _ScriptRepository.BoCollection.Where(r => r.User.Name == Name).ToArray();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return _ScriptRepository.BoCollection.Where(r => r.Author.Name == Name).ToArray();
             }
         }
 

@@ -33,6 +33,7 @@
     <Property Name="ScriptAsJson" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="Created" Type="datetime" Nullable="false" />
+    <Property Name="Modified" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="UserNamesSet">
     <Key>
@@ -102,6 +103,7 @@
           <NavigationProperty Name="User" Relationship="CanvasScriptDB.UsersScripts" FromRole="Scripts" ToRole="Users" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="UsersScripts">
           <End Type="CanvasScriptDB.Users" Role="Users" Multiplicity="1" >
@@ -150,6 +152,7 @@
           <ScalarProperty Name="ScriptAsJson" ColumnName="ScriptAsJson" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Created" ColumnName="Created" />
+          <ScalarProperty Name="Modified" ColumnName="Modified" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

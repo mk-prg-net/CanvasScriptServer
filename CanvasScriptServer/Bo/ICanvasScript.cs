@@ -47,22 +47,27 @@ namespace CanvasScriptServer
         /// <summary>
         /// Name des Scriptes
         /// </summary>
-        string Name { get; set; }
+        string Name { get;}
 
         /// <summary>
         /// Name des Benutzers, dem das Script zugeordnet ist
         /// </summary>
-        IUser User { get; set; }
+        IUser Author { get;}
 
         /// <summary>
         /// Tag,  an dem das Script erstellt wurde
         /// </summary>
-        DateTime Created { get; set; }
+        DateTime Created { get; }
+
+        /// <summary>
+        /// Änderungsdatum
+        /// </summary>
+        DateTime Modified { get; }
 
         /// <summary>
         /// Script als JSON- String. Wird im Browser mittels der CanvasPainter- JavaScript
         /// Bibliothek bearbeitet
         /// </summary>
-        string ScriptAsJson { get; set; }
+        string ScriptAsJson { get;}
     }
 }
