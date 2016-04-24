@@ -13,11 +13,11 @@ namespace CanvasScriptServer.Mocks
     public class User : IUser
     {
 
-        public User(CanvasScriptRepository ScriptsRepository)
+        public User(CanvasScriptRepository<CanvasScript> ScriptsRepository)
         {
             _ScriptRepository = ScriptsRepository;
         }
-        CanvasScriptRepository _ScriptRepository;
+        CanvasScriptRepository<CanvasScript> _ScriptRepository;
 
         //public User(IUser user)
         //{
@@ -35,7 +35,7 @@ namespace CanvasScriptServer.Mocks
         {
             get
             {
-                return _ScriptRepository.BoCollection.Where(r => r.Author.Name == Name).ToArray();
+                return _ScriptRepository.Get(filter: r => r.Author.Name == Name).ToArray();
             }
         }
 

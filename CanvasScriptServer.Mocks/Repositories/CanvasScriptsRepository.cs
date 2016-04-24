@@ -42,17 +42,12 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.Mocks
 {
-    public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository
+    public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository<CanvasScript>
     {
         List<CanvasScript> _ScriptList = new List<CanvasScript>();
 
         System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
-
-
-        public override IQueryable<ICanvasScript> BoCollection
-        {
-            get { return _ScriptList.AsQueryable(); }
-        }
+       
 
         public readonly string DefaultScript = "[{\"beginPath\": \"true\"}, {\"strokeStyle\": { \"Style\": \"rgb(255, 255, 0)\"}}, {\"moveTo\": {\"X\": 0, \"Y\":0}}, {\"lineTo\": {\"X\": 100, \"Y\":100}}, { \"closePath\": true}, {\"stroke\": true} ]";
         
@@ -68,7 +63,7 @@ namespace CanvasScriptServer.Mocks
             cudActions.Enqueue(() => _ScriptList.Add(entity));                
         }
 
-        public override Func<ICanvasScript, bool> GetBoIDTest(CanvasScriptKey id)
+        public override Func<CanvasScript, bool> GetBoIDTest(CanvasScriptKey id)
         {
             System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
 
@@ -108,14 +103,34 @@ namespace CanvasScriptServer.Mocks
         }
 
 
-        public override ICanvasScript GetBo(CanvasScriptKey id)
+        public override CanvasScript GetBo(CanvasScriptKey id)
         {
             return _ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname);
+        }
+
+        public override IEnumerable<CanvasScript> Get(System.Linq.Expressions.Expression<Func<CanvasScript, bool>> filter = null, Func<IQueryable<CanvasScript>, IOrderedQueryable<CanvasScript>> orderBy = null, string includeProperties = "")
+        {
+            var query = _ScriptList.AsQueryable();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
 
         public override ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id)
         {
             return new Bo.CanvasScriptBuilder(_ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname));
         }
+
+        
     }
 }

@@ -41,24 +41,19 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class CanvasScriptRepository : mko.BI.Repositories.BoCo<ICanvasScript>, 
-        mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, CanvasScriptKey>,
+    public abstract class CanvasScriptRepository<TScript> :
+        mko.BI.Repositories.Interfaces.IGetBo<TScript, CanvasScriptKey>,
         mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, CanvasScriptKey>,
         mko.BI.Repositories.Interfaces.IRemove<CanvasScriptKey>,
         mko.BI.Repositories.Interfaces.ISubmitChanges
+        where TScript : ICanvasScript
     {
-        public class SortName : mko.BI.Repositories.DefSortOrderCol<ICanvasScript, string>
-        {
-            public SortName(bool Descending) : base(r => r.Name, Descending) { }
-        }
-
-        public CanvasScriptRepository()
-            : base(new SortName(true)) { }
-
         // mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, string>,
         public abstract bool Any(CanvasScriptKey id);
-        public abstract ICanvasScript GetBo(CanvasScriptKey id);
-        public abstract Func<ICanvasScript, bool> GetBoIDTest(CanvasScriptKey id);
+        public abstract TScript GetBo(CanvasScriptKey id);
+        public abstract Func<TScript, bool> GetBoIDTest(CanvasScriptKey id);
+
+        public abstract IEnumerable<TScript> Get(System.Linq.Expressions.Expression<Func<TScript, bool>> filter = null, Func<IQueryable<TScript>, IOrderedQueryable<TScript>> orderBy = null, string includeProperties = "");
 
         // mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, string>
         public abstract ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id);
@@ -72,5 +67,11 @@ namespace CanvasScriptServer
         public abstract void RemoveFromCollection(CanvasScriptKey id);
 
         public abstract void SubmitChanges();
+
+
+        
+        
+
+        
     }
 }

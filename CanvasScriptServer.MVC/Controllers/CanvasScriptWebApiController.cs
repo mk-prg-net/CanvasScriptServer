@@ -45,9 +45,9 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class CanvasScriptWebApiController : ApiController
     {
-        ICanvasScriptServerUnitOfWork unitOfWork;
+        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
 
-        public CanvasScriptWebApiController(ICanvasScriptServerUnitOfWork unitOfWork)
+        public CanvasScriptWebApiController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

@@ -1,39 +1,4 @@
-﻿//<unit_header>
-//----------------------------------------------------------------
-//
-// Martin Korneffel: IT Beratung/Softwareentwicklung
-// Stuttgart, den 8.3.2016
-//
-//  Projekt.......: CanvasScriptServer.Mocks
-//  Name..........: UserRepository.cs
-//  Aufgabe/Fkt...: Mockup für Repository der Script- Autoren
-//                  
-//
-//
-//
-//
-//<unit_environment>
-//------------------------------------------------------------------
-//  Zielmaschine..: PC 
-//  Betriebssystem: Windows 7 mit .NET 4.5
-//  Werkzeuge.....: Visual Studio 2013
-//  Autor.........: Martin Korneffel (mko)
-//  Version 1.0...: 
-//
-// </unit_environment>
-//
-//<unit_history>
-//------------------------------------------------------------------
-//
-//  Version.......: 1.1
-//  Autor.........: Martin Korneffel (mko)
-//  Datum.........: 
-//  Änderungen....: 
-//
-//</unit_history>
-//</unit_header>        
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -42,24 +7,18 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.Mocks
 {
-    public class UsersRepository : CanvasScriptServer.UserRepository
+    public class UsersRepositoryV2 : global::CanvasScriptServer.UserRepositoryV2<User>
     {
-        CanvasScriptRepository _Scripts;
+        CanvasScriptRepository<CanvasScript> _Scripts;
         System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
 
-        public UsersRepository(CanvasScriptRepository Scripts)
+        public UsersRepositoryV2(CanvasScriptRepository<CanvasScript> Scripts)
         {
             _Scripts = Scripts;
         }
 
 
-        List<IUser> _Users = new List<IUser>();
-
-
-        public override IQueryable<IUser> BoCollection
-        {
-            get { return _Users.AsQueryable(); }
-        }
+        List<User> _Users = new List<User>();
 
 
         public override void CreateBoAndAddToCollection(string Name)
@@ -70,7 +29,7 @@ namespace CanvasScriptServer.Mocks
             cudActions.Enqueue(() => _Users.Add(entity));            
         } 
 
-        public override Func<IUser, bool> GetBoIDTest(string id)
+        public override Func<User, bool> GetBoIDTest(string id)
         {
             return r => r.Name == id;
         }
@@ -84,7 +43,7 @@ namespace CanvasScriptServer.Mocks
         {
             var rec = _Users.Find(r => r.Name == Name);
             cudActions.Enqueue(() => {
-                var myScriptNames = _Scripts.BoCollection.Where(r => r.Author.Name == Name).Select(r => r.Name);
+                var myScriptNames = _Scripts.Get(filter: r => r.Author.Name == Name).Select(r => r.Name);
                 foreach (var scriptName in myScriptNames)
                 {
                     _Scripts.RemoveFromCollection(CanvasScriptKey.Create(Name, scriptName));
@@ -109,9 +68,28 @@ namespace CanvasScriptServer.Mocks
             return _Users.Any(r => r.Name == username);
         }
 
-        public override IUser GetBo(string id)
+        public override User GetBo(string id)
         {
             return _Users.Find(r => r.Name == id);
+        }
+
+        public override IEnumerable<User> Get(System.Linq.Expressions.Expression<Func<User, bool>> filter = null, Func<IQueryable<User>, IOrderedQueryable<User>> orderBy = null, string includeProperties = "")
+        {
+            IQueryable<User> query = _Users.AsQueryable();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }           
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
     }
 }

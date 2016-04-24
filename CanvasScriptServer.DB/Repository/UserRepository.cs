@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Linq.Expressions;
+
 namespace CanvasScriptServer.DB.Repository
 {
-    public class UserRepository : CanvasScriptServer.UserRepository
+    public class UserRepository : CanvasScriptServer.UserRepositoryV2<Users>
     {
         public UserRepository(CanvasScriptDBContainer Orm)
         {
@@ -20,15 +22,7 @@ namespace CanvasScriptServer.DB.Repository
         {
             // Suche bezüglich Schlüssel ist schneller als allgemeines .Any(...)
             return null != Orm.UserNamesSet.Find(username);            
-        }
-
-
-        public override IQueryable<IUser> BoCollection
-        {
-            get { 
-                return Orm.UsersSet.ToArray().AsQueryable();
-            }
-        }
+        }        
 
 
         public override void CreateBoAndAddToCollection(string userName)
@@ -39,9 +33,9 @@ namespace CanvasScriptServer.DB.Repository
             Orm.UsersSet.Add(e);
         }
 
-        public override Func<IUser, bool> GetBoIDTest(string id)
+        public override Func<Users, bool> GetBoIDTest(string id)
         {
-            return e => e.Name == id;
+            return e => e.Name.Name == id;
         }
 
         public override void RemoveAll()
@@ -65,7 +59,7 @@ namespace CanvasScriptServer.DB.Repository
             Orm.SaveChanges();
         }
 
-        public override IUser GetBo(string id)
+        public override Users GetBo(string id)
         {
             var userName = Orm.UserNamesSet.Find(id);
             if(userName != null){
@@ -73,6 +67,25 @@ namespace CanvasScriptServer.DB.Repository
             } else {
                 throw new ArgumentOutOfRangeException("Der Benutzer mit der ID" + id + " existiert nicht");
             }           
+        }
+
+        public override IEnumerable<Users> Get(System.Linq.Expressions.Expression<Func<Users, bool>> filter = null, Func<IQueryable<Users>, IOrderedQueryable<Users>> orderBy = null, string includeProperties = "")
+        {
+            IQueryable<Users> query = Orm.UsersSet; //.AsQueryable();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
     }
 }

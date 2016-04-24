@@ -10,9 +10,9 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class CanvasScriptsController : Controller
     {
-        ICanvasScriptServerUnitOfWork unitOfWork;
+        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
 
-        public CanvasScriptsController(ICanvasScriptServerUnitOfWork unitOfWork)
+        public CanvasScriptsController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

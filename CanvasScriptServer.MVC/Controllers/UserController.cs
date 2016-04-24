@@ -10,23 +10,23 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class UserController : Controller
     {
-        ICanvasScriptServerUnitOfWork unitOfWork;
+        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
 
-        public UserController(ICanvasScriptServerUnitOfWork unitOfWork)
+        public UserController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
         {
             this.unitOfWork = unitOfWork;            
         }
 
 
-        IQueryable<IUser> GetUsers(bool OrderUpward)
+        IEnumerable<IUser> GetUsers(bool OrderUpward)
         {
             //mko.BI.Repositories.DefSortOrder<IUser> order = new CanvasScriptServer.UserRepository.SortName(!OrderUpward);
             //unitOfWork.Users.DefSortOrders(order);
             //return unitOfWork.Users.GetFilteredAndSortedListOfBo();
             if (OrderUpward)
-                return unitOfWork.Users.GetFilteredListOfBo().OrderBy(r => r.Name);
+                return unitOfWork.Users.Get(orderBy: users => users.OrderBy(user => user.Name.Name));
             else
-                return unitOfWork.Users.GetFilteredListOfBo().OrderByDescending(r => r.Name);
+                return unitOfWork.Users.Get(orderBy: users => users.OrderByDescending(user => user.Name.Name));
         }
 
         // GET: User

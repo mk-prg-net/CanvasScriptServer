@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public interface ICanvasScriptServerUnitOfWork : IDisposable, mko.BI.Repositories.Interfaces.ISubmitChanges
+    public interface ICanvasScriptServerUnitOfWork<TUser, TScript> : IDisposable, mko.BI.Repositories.Interfaces.ISubmitChanges
+        where TUser : IUser
+        where TScript : ICanvasScript
     {
         /// <summary>
         /// In UnitOfWork spielt das Repository die Rolle einer filterbare Liste der Scriptautoren. 
         /// </summary>
-        UserRepository Users
+        UserRepositoryV2<TUser> Users
         {
             get;
         }
@@ -19,7 +21,7 @@ namespace CanvasScriptServer
         /// <summary>
         /// In UnitOfWork spielt das Repository die Rolle einer filterbare Liste der Scripte.
         /// </summary>
-        CanvasScriptRepository Scripts
+        CanvasScriptRepository<TScript> Scripts
         {
             get;
         }

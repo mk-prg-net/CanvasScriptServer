@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.DB
 {
-    public partial class CanvasScriptDBContainer : ICanvasScriptServerUnitOfWork
+    public partial class CanvasScriptDBContainer : ICanvasScriptServerUnitOfWork<Users, Scripts>
     {   
 
-        public UserRepository Users
+        public UserRepositoryV2<Users> Users
         {
             get { return new DB.Repository.UserRepository(this); }
         }
 
-        public CanvasScriptRepository Scripts
+        public CanvasScriptRepository<Scripts> Scripts
         {
             get { return new DB.Repository.CanvasScriptRepository(this); }
         }

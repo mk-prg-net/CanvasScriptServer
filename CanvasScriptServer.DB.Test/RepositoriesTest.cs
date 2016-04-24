@@ -12,35 +12,35 @@ namespace CanvasScriptServer.DB.Test
         public void UnitOfWorkTest()
         {
 
-            using (CanvasScriptServer.ICanvasScriptServerUnitOfWork UofW = new DB.CanvasScriptDBContainer())
+            using (var UofW = new DB.CanvasScriptDBContainer())
             {
-                UofW.createUser("Anton");
-                UofW.createUser("Berta");
+                UofW.createUser("X");
+                UofW.createUser("Y");
 
                 UofW.SubmitChanges();
 
-                UofW.createScript("Anton", "T1");
-                UofW.createScript("Anton", "T2");
+                UofW.createScript("X", "T1");
+                UofW.createScript("Y", "T2");
 
-                var Anton = UofW.Users.GetBo("Anton");
-                Assert.AreEqual(Anton.Scripts.Count(), 2, "Anton sollte zwei Skripte besitzen");
+                var Anton = UofW.Users.GetBo("X");
+                Assert.AreEqual(1, Anton.Scripts.Count(), "Anton sollte zwei Skripte besitzen");
 
                 UofW.SubmitChanges();
 
-                var T2Bld = UofW.Scripts.GetBoBuilder(CanvasScriptKey.Create("Anton", "T2"));
+                var T2Bld = UofW.Scripts.GetBoBuilder(CanvasScriptKey.Create("X", "T1"));
                 T2Bld.setScript("[]");
 
-                var Berta = UofW.Users.GetBo("Berta");
-                Assert.AreEqual(Berta.Scripts.Count(), 0, "Berta sollte keine Skripte besitzen");
+                var Berta = UofW.Users.GetBo("Y");
+                Assert.AreEqual(1, Berta.Scripts.Count(), "Berta sollte keine Skripte besitzen");
 
 
-                UofW.deleteUser(Anton.Name);
-                UofW.deleteUser(Berta.Name);
+                UofW.deleteUser(Anton.Name.Name);
+                UofW.deleteUser(Berta.Name.Name);
 
                 UofW.SubmitChanges();
 
-                Assert.AreEqual(UofW.Users.CountAllBo(), 0, "Alle Benutzer sollten gelöscht sein");
-                Assert.AreEqual(UofW.Scripts.CountAllBo(), 0, "Alle Skripte sollten gelöscht sein");
+                Assert.AreEqual(0, UofW.Users.Get().Count(), "Alle Benutzer sollten gelöscht sein");
+                Assert.AreEqual(0, UofW.Scripts.Get().Count(), "Alle Skripte sollten gelöscht sein");
 
             }
 
