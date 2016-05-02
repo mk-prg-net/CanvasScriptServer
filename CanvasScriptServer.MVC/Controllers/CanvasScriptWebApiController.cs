@@ -45,9 +45,9 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class CanvasScriptWebApiController : ApiController
     {
-        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
+        ICanvasScriptServerUnitOfWork unitOfWork;
 
-        public CanvasScriptWebApiController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
+        public CanvasScriptWebApiController(ICanvasScriptServerUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -65,7 +65,7 @@ namespace CanvasScriptServer.MVC.Controllers
         {
             var scriptBuilder = unitOfWork.Scripts.GetBoBuilder(CanvasScriptKey.Create(scriptFromClient.userName, scriptFromClient.scriptName));
             scriptBuilder.setScript(scriptFromClient.scriptJson);
-            unitOfWork.Scripts.SubmitChanges();
+            unitOfWork.SubmitChanges();
 
             return scriptFromClient.scriptJson;
         }

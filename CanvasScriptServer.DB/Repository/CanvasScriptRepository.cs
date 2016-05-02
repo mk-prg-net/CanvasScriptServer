@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.DB.Repository
 {
-    public class CanvasScriptRepository: CanvasScriptServer.CanvasScriptRepository<Scripts>
+    public class CanvasScriptRepository: CanvasScriptServer.CanvasScriptRepository
     {
 
         public CanvasScriptRepository(CanvasScriptDBContainer Orm)
@@ -17,18 +17,13 @@ namespace CanvasScriptServer.DB.Repository
         CanvasScriptDBContainer Orm;        
 
 
-        public override void RemoveAll()
+        public override void RemoveAllBo()
         {
             throw new NotImplementedException();
         }
         
 
-        public override void SubmitChanges()
-        {
-            Orm.SaveChanges();
-        }
-
-        public override bool Any(CanvasScriptKey id)
+        public override bool ExistsBo(CanvasScriptKey id)
         {
             return Orm.ScriptsSet.Any(r => r.Name == id.Scriptname && r.User.Name.Name == id.Username);
         }
@@ -38,34 +33,9 @@ namespace CanvasScriptServer.DB.Repository
             return Orm.ScriptsSet.FirstOrDefault(r => r.User.Name.Name == id.Username && r.Name == id.Scriptname);
         }
 
-        public override Scripts GetBo(CanvasScriptKey id)
+        public override ICanvasScript GetBo(CanvasScriptKey id)
         {
             return GetScript(id);
-        }
-
-        public override IEnumerable<Scripts> Get(System.Linq.Expressions.Expression<Func<Scripts, bool>> filter = null, Func<IQueryable<Scripts>, IOrderedQueryable<Scripts>> orderBy = null, string includeProperties = "")
-        {
-            IQueryable<Scripts> query = Orm.ScriptsSet; //.AsQueryable();
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
-        }
-
-
-        public override Func<Scripts, bool> GetBoIDTest(CanvasScriptKey id)
-        {
-            return r => r.User.Name.Name == id.Username && r.Name == id.Scriptname;
         }
 
         public override ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id)
@@ -73,7 +43,7 @@ namespace CanvasScriptServer.DB.Repository
             return GetScript(id);
         }
 
-        public override void RemoveFromCollection(CanvasScriptKey id)
+        public override void RemoveBo(CanvasScriptKey id)
         {
             var script = GetScript(id);
             if (null != script)
@@ -86,5 +56,57 @@ namespace CanvasScriptServer.DB.Repository
             }            
         }
 
+
+        public class FilteredAnSortedSetBuilder : CanvasScriptServer.CanvasScriptRepository.IFilteredAndSortedSetBuilder
+        {
+
+
+            IQueryable<Scripts> _query;
+            List<mko.BI.Repositories.DefSortOrder<Scripts>> _SortOrders = new List<mko.BI.Repositories.DefSortOrder<Scripts>>();
+
+            internal FilteredAnSortedSetBuilder(DB.CanvasScriptDBContainer Orm)
+            {
+                _query = Orm.ScriptsSet;
+            }
+
+
+
+            public void defNameLike(string pattern)
+            {
+                _query = _query.Where(r => r.Name.Contains(pattern));
+            }
+
+            public void defAuthor(string name)
+            {
+                _query = _query.Where(r => r.User.Name.Name.Contains(name));
+            }
+
+            public void defCreatedBetween(DateTime begin, DateTime end)
+            {
+                _query = _query.Where(r => begin <= r.Created && r.Created <= end);
+            }
+
+            public void defModifiedBetween(DateTime begin, DateTime end)
+            {
+                _query = _query.Where(r => begin <= r.Modified && r.Modified <= end);
+            }
+
+            public mko.BI.Repositories.Interfaces.IFilteredSortedSet<ICanvasScript> GetSet()
+            {
+                if (!_SortOrders.Any())
+                {
+                    _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<Scripts, DateTime>(r => r.Created, true));
+                }
+                else { }
+
+                return new mko.BI.Repositories.FilteredSortedSet<Scripts>(_query, _SortOrders);
+            }
+        }
+
+
+        public override CanvasScriptServer.CanvasScriptRepository.IFilteredAndSortedSetBuilder getFilteredAndSortedSetBuilder()
+        {
+            return new FilteredAnSortedSetBuilder(Orm);
+        }
     }
 }

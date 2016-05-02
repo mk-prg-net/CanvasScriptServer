@@ -25,10 +25,9 @@
 //<unit_history>
 //------------------------------------------------------------------
 //
-//  Version.......: 1.1
 //  Autor.........: Martin Korneffel (mko)
-//  Datum.........: 
-//  Änderungen....: 
+//  Datum.........: 25.4.2016
+//  Änderungen....: Refactoring in IMplementierung neuer Schnittstelle ICanvaScript
 //
 //</unit_history>
 //</unit_header>        
@@ -53,14 +52,14 @@ namespace CanvasScriptServer.Mocks
         }
         internal string _Name;
 
-        public IUser Author
+        public string AuthorName
         {
             get
             {
                 return _Author;
             }
         }
-        internal IUser _Author;
+        internal string _Author;
 
 
         public DateTime Created

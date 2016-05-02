@@ -25,11 +25,13 @@
 //<unit_history>
 //------------------------------------------------------------------
 //
-//  Version.......: 1.1
 //  Autor.........: Martin Korneffel (mko)
-//  Datum.........: 
-//  Änderungen....: 
-//
+//  Datum.........: 25.4.2016
+//  Änderungen....: Refaktoriert in Implementierung neuer Repository- Schnittstellen
+//                  (IFilteredAndSortedSetBuilder etc.). Repository verwaltet jetzt wieder
+//                  Mengen auf Objkete, die die Schnittstelle ICanvasScript implmentieren. 
+//                  Höhere Abstraktion als generisches Repository für TScript Objekte, die ICanvasScript
+//                  implementieren.
 //</unit_history>
 //</unit_header>        
         
@@ -41,37 +43,48 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer
 {
-    public abstract class CanvasScriptRepository<TScript> :
-        mko.BI.Repositories.Interfaces.IGetBo<TScript, CanvasScriptKey>,
+    public abstract class CanvasScriptRepository :
+        mko.BI.Repositories.Interfaces.IGet<ICanvasScript, CanvasScriptKey>,
         mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, CanvasScriptKey>,
-        mko.BI.Repositories.Interfaces.IRemove<CanvasScriptKey>,
-        mko.BI.Repositories.Interfaces.ISubmitChanges
-        where TScript : ICanvasScript
+        mko.BI.Repositories.Interfaces.IRemove<CanvasScriptKey>
     {
         // mko.BI.Repositories.Interfaces.IGetBo<ICanvasScript, string>,
-        public abstract bool Any(CanvasScriptKey id);
-        public abstract TScript GetBo(CanvasScriptKey id);
-        public abstract Func<TScript, bool> GetBoIDTest(CanvasScriptKey id);
+        public abstract bool ExistsBo(CanvasScriptKey id);
+        public abstract ICanvasScript GetBo(CanvasScriptKey id);
 
-        public abstract IEnumerable<TScript> Get(System.Linq.Expressions.Expression<Func<TScript, bool>> filter = null, Func<IQueryable<TScript>, IOrderedQueryable<TScript>> orderBy = null, string includeProperties = "");
 
         // mko.BI.Repositories.Interfaces.IGetBoBuilder<ICanvasScriptBuilder, string>
         public abstract ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id);
 
         // mko.BI.Repositories.Interfaces.IRemove<ICanvasScript>
-        public virtual void RemoveAll()
+        public virtual void RemoveAllBo()
         {
             throw new NotImplementedException();
         }
 
-        public abstract void RemoveFromCollection(CanvasScriptKey id);
+        public abstract void RemoveBo(CanvasScriptKey id);
 
-        public abstract void SubmitChanges();
+        public interface IFilteredAndSortedSetBuilder : mko.BI.Repositories.Interfaces.IFilteredSortedSetBuilder<ICanvasScript>
+        {
+            /// <summary>
+            /// Einschränken auf Skripte, auf deren Namen das Muster passt
+            /// </summary>
+            /// <param name="pattern"></param>
+            void defNameLike(string pattern);
+
+            /// <summary>
+            /// Einschränken auf Scripte eines Authors
+            /// </summary>
+            /// <param name="name"></param>
+            void defAuthor(string name);
+
+            void defCreatedBetween(DateTime begin, DateTime end);
+
+            void defModifiedBetween(DateTime begin, DateTime end);
+        }
+
+        public abstract IFilteredAndSortedSetBuilder getFilteredAndSortedSetBuilder();
 
 
-        
-        
-
-        
     }
 }

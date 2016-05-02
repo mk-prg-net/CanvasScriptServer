@@ -7,89 +7,104 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.Mocks
 {
-    public class UsersRepositoryV2 : global::CanvasScriptServer.UserRepositoryV2<User>
+    public class UsersRepositoryV2 : global::CanvasScriptServer.UserRepositoryV2
     {
-        CanvasScriptRepository<CanvasScript> _Scripts;
-        System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
+        List<User> _Users;
+        internal List<CanvasScript> _Scripts;
+        System.Collections.Generic.Queue<Action> _cudActions;
 
-        public UsersRepositoryV2(CanvasScriptRepository<CanvasScript> Scripts)
+        public UsersRepositoryV2(List<User> Users, List<CanvasScript> Scripts, System.Collections.Generic.Queue<Action> cudActions)
         {
+            _Users = Users;
             _Scripts = Scripts;
-        }
-
-
-        List<User> _Users = new List<User>();
-
-
-        public override void CreateBoAndAddToCollection(string Name)
+            _cudActions = cudActions;
+        }        
+        public override void CreateBoAndAdd(string Name)
         {
-            var entity = new User(_Scripts);
-            entity.Name = Name;
-
-            cudActions.Enqueue(() => _Users.Add(entity));            
+            if (!_Users.Any(r => r.Name == Name))
+            {
+                var entity = new User(Name);
+                _cudActions.Enqueue(() => _Users.Add(entity));
+            }
+            else
+            {
+                throw new System.Data.ConstraintException("Es existiert bereits ein User mit dem Namen" + Name);
+            }
         } 
 
-        public override Func<User, bool> GetBoIDTest(string id)
-        {
-            return r => r.Name == id;
-        }
 
-        public override void RemoveAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void RemoveFromCollection(string Name)
-        {
-            var rec = _Users.Find(r => r.Name == Name);
-            cudActions.Enqueue(() => {
-                var myScriptNames = _Scripts.Get(filter: r => r.Author.Name == Name).Select(r => r.Name);
-                foreach (var scriptName in myScriptNames)
-                {
-                    _Scripts.RemoveFromCollection(CanvasScriptKey.Create(Name, scriptName));
-                }
-                _Users.Remove(rec); 
-
-            });
-        }
-
-        public override void SubmitChanges()
-        {
-            while (cudActions.Any())
-            {
-                cudActions.Dequeue()();
-            }
-            Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" +_Users.Count);
-        }
-
-
-        public override bool Any(string username)
+        public override bool ExistsBo(string username)
         {
             return _Users.Any(r => r.Name == username);
         }
 
-        public override User GetBo(string id)
+        public override IUser GetBo(string id)
         {
             return _Users.Find(r => r.Name == id);
         }
 
-        public override IEnumerable<User> Get(System.Linq.Expressions.Expression<Func<User, bool>> filter = null, Func<IQueryable<User>, IOrderedQueryable<User>> orderBy = null, string includeProperties = "")
+        public class FilteredAndSortedSetBuilder : CanvasScriptServer.UserRepositoryV2.IFilteredSortedSetBuilder
         {
-            IQueryable<User> query = _Users.AsQueryable();
+            IQueryable<User> _query;
+            List<CanvasScript> _Scripts;
+            List<mko.BI.Repositories.DefSortOrder<User>> _SortOrders = new List<mko.BI.Repositories.DefSortOrder<User>>();
 
-            if (filter != null)
+            
+            internal FilteredAndSortedSetBuilder(List<User> Users, List<CanvasScript> Scripts)
             {
-                query = query.Where(filter);
-            }           
+                _query = Users.AsQueryable();
+                _Scripts = Scripts;
+            }
 
-            if (orderBy != null)
+            // Filterkriterien
+
+            public void defNameLike(string pattern)
             {
-                return orderBy(query).ToList();
+                _query = _query.Where(r => r.Name.Contains(pattern));
             }
-            else
+
+            public void CreatedBetween(DateTime begin, DateTime end)
             {
-                return query.ToList();
+                _query = _query.Where(r => r.Created >= begin && r.Created <= end);
             }
+
+            // Soriterkriterien
+            public void sortByUserName(bool descending)
+            {
+                _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<User, string>(r => r.Name, descending));
+            }
+
+            public void sortByCreated(bool descending)
+            {
+                _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<User, DateTime>(r => r.Created, descending));
+            }
+
+            public void sortByScriptCount(bool descending)
+            {
+                _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<User, int>(r => _Scripts.Count(rr => rr.AuthorName == r.Name), descending));
+            }
+
+
+            /// <summary>
+            /// Teilmenge mit den definierten Einschränkungen und Sortierkriterien erzeugen
+            /// </summary>
+            /// <returns></returns>
+            mko.BI.Repositories.Interfaces.IFilteredSortedSet<IUser> mko.BI.Repositories.Interfaces.IFilteredSortedSetBuilder<IUser>.GetSet()
+            {
+                if (!_SortOrders.Any())
+                {
+                    _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<User, DateTime>(r => r.Created, true));
+                }
+                else { }
+
+                return new mko.BI.Repositories.FilteredSortedSet<User>(_query, _SortOrders);
+            }
+        }
+
+
+        public override UserRepositoryV2.IFilteredSortedSetBuilder getFilteredSortedSetBuilder()
+        {
+            return new FilteredAndSortedSetBuilder(_Users, _Scripts);
         }
     }
 }

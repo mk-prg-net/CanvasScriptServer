@@ -44,8 +44,18 @@ namespace CanvasScriptServer
 {
     public interface IUser
     {
+        /// <summary>
+        /// Fachschlüssel eines Benutzers
+        /// </summary>
         string Name { get;}
 
-        IEnumerable<ICanvasScript> Scripts { get; }
+        // nicht sinnvoll: Auf einen Benutzer können Skriptobjekte verweisen, die dieser angelegt hat.
+        // Wenn der Benutzer selber auf diese verweist, ergeben sich folgende Probleme
+        // 1) beim Hinzufügen und Löschen von Skriptobjekten ist die Verweislist im User anzupassen
+        // 2) Über das Repository der Skripte können mittels eines Filters alle Skripte zu einem User bestimmt werden -
+        //    die Verweisliste im User ist damit redundant !
+        //IEnumerable<ICanvasScript> Scripts { get; }
+
+        DateTime Created { get; }
     }
 }

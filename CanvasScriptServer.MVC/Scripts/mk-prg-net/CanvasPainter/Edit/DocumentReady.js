@@ -125,10 +125,12 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
                 var jsonObjListFromServer = JSON.parse(Data);
 
                 // Aus den Objekten ein echtes Canvas-Script aufbauen
-                var scriptsFromServer = Script.from(jsonObjListFromServer);
+                //var scriptsFromServer = Script.from(jsonObjListFromServer);
+                Drawing = Script.from(jsonObjListFromServer);
 
                 // Script zeichnen
-                Script.plot(scriptsFromServer, ctx);
+                //Script.plot(scriptsFromServer, ctx);
+                Script.plot(Drawing, ctx);
 
                 // Die Liste der Canvas- Befehle ausgeben
                 PrintScriptListing(jsonObjListFromServer);

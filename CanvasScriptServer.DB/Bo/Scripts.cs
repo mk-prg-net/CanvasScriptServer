@@ -9,17 +9,18 @@ namespace CanvasScriptServer.DB
     partial class Scripts : ICanvasScript, ICanvasScriptBuilder
     {
 
-        IUser ICanvasScript.Author
-        {
-            get
-            {
-                return User;
-            }
-        }
 
         void ICanvasScriptBuilder.setScript(string Script)
         {
             this.ScriptAsJson = Script;
+        }
+
+
+        public string AuthorName
+        {
+            get { 
+                return User.Name.Name;
+            }
         }
     }
 }

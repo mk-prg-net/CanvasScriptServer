@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace CanvasScriptServer.DB.Repository
 {
-    public class UserRepository : CanvasScriptServer.UserRepositoryV2<Users>
+    public class UserRepository : CanvasScriptServer.UserRepositoryV2
     {
         public UserRepository(CanvasScriptDBContainer Orm)
         {
@@ -16,50 +16,20 @@ namespace CanvasScriptServer.DB.Repository
         }
 
         private CanvasScriptDBContainer Orm;
-        
 
-        public override bool Any(string username)
-        {
-            // Suche bezüglich Schlüssel ist schneller als allgemeines .Any(...)
-            return null != Orm.UserNamesSet.Find(username);            
-        }        
-
-
-        public override void CreateBoAndAddToCollection(string userName)
+        public override void CreateBoAndAdd(string userName)
         {
             var e = Orm.UsersSet.Create();
             e.Name = Orm.UserNamesSet.Create();
             e.Name.Name = userName;
+            //e.Name.User = e;
+            e.Created = DateTime.Now;
             Orm.UsersSet.Add(e);
         }
 
-        public override Func<Users, bool> GetBoIDTest(string id)
-        {
-            return e => e.Name.Name == id;
-        }
 
-        public override void RemoveAll()
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void RemoveFromCollection(string userName)
-        {
-            var uN = Orm.UserNamesSet.Find(userName);
-            if (uN != null)
-            {
-                var user = uN.User;
-                Orm.UserNamesSet.Remove(uN);
-                Orm.UsersSet.Remove(user);
-            }            
-        }
-
-        public override void SubmitChanges()
-        {
-            Orm.SaveChanges();
-        }
-
-        public override Users GetBo(string id)
+        public override IUser GetBo(string id)
         {
             var userName = Orm.UserNamesSet.Find(id);
             if(userName != null){
@@ -69,23 +39,62 @@ namespace CanvasScriptServer.DB.Repository
             }           
         }
 
-        public override IEnumerable<Users> Get(System.Linq.Expressions.Expression<Func<Users, bool>> filter = null, Func<IQueryable<Users>, IOrderedQueryable<Users>> orderBy = null, string includeProperties = "")
+
+        public override bool ExistsBo(string id)
         {
-            IQueryable<Users> query = Orm.UsersSet; //.AsQueryable();
+            // Suche bezüglich Schlüssel ist schneller als allgemeines .Any(...)
+            return null != Orm.UserNamesSet.Find(id);   
+        }
 
-            if (filter != null)
+        public class FilteredAndSortedSetBuilder : CanvasScriptServer.UserRepositoryV2.IFilteredSortedSetBuilder
+        {
+            IQueryable<Users> _query;
+            private CanvasScriptDBContainer Orm;
+            List<mko.BI.Repositories.DefSortOrder<Users>> _SortOrders = new List<mko.BI.Repositories.DefSortOrder<Users>>();
+
+            internal FilteredAndSortedSetBuilder(CanvasScriptDBContainer Orm)
             {
-                query = query.Where(filter);
+                this.Orm = Orm;
+                _query = Orm.UsersSet;
             }
 
-            if (orderBy != null)
+            public void defNameLike(string pattern)
             {
-                return orderBy(query).ToList();
+                _query = _query.Where(r => r.Name.Name.Contains(pattern));
             }
-            else
+
+            public void CreatedBetween(DateTime begin, DateTime end)
             {
-                return query.ToList();
+                _query = _query.Where(r => r.Created >= begin && r.Created <= end);
             }
+
+            public void sortByUserName(bool descending)
+            {
+                _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<Users, string>(r => r.Name.Name, descending));
+            }
+
+            public void sortByScriptCount(bool descending)
+            {
+                _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<Users, int>(r => r.Scripts.Count, descending));
+            }
+
+            public mko.BI.Repositories.Interfaces.IFilteredSortedSet<IUser> GetSet()
+            {
+                if (!_SortOrders.Any())
+                {
+                    _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<Users, DateTime>(r => r.Created, true));
+                }
+                else { }
+
+                return new mko.BI.Repositories.FilteredSortedSet<Users>(_query, _SortOrders);
+
+            }
+
+        }
+
+        public override UserRepositoryV2.IFilteredSortedSetBuilder getFilteredSortedSetBuilder()
+        {
+            return new FilteredAndSortedSetBuilder(Orm);
         }
     }
 }

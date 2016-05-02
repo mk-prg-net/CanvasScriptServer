@@ -10,9 +10,9 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class UserController : Controller
     {
-        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
+        ICanvasScriptServerUnitOfWork unitOfWork;
 
-        public UserController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
+        public UserController(ICanvasScriptServerUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;            
         }
@@ -23,10 +23,12 @@ namespace CanvasScriptServer.MVC.Controllers
             //mko.BI.Repositories.DefSortOrder<IUser> order = new CanvasScriptServer.UserRepository.SortName(!OrderUpward);
             //unitOfWork.Users.DefSortOrders(order);
             //return unitOfWork.Users.GetFilteredAndSortedListOfBo();
-            if (OrderUpward)
-                return unitOfWork.Users.Get(orderBy: users => users.OrderBy(user => user.Name.Name));
-            else
-                return unitOfWork.Users.Get(orderBy: users => users.OrderByDescending(user => user.Name.Name));
+
+            var UsersOrderedBld = unitOfWork.Users.getFilteredSortedSetBuilder();
+
+            UsersOrderedBld.sortByUserName(OrderUpward);
+
+            return UsersOrderedBld.GetSet().Get();
         }
 
         // GET: User
@@ -53,12 +55,11 @@ namespace CanvasScriptServer.MVC.Controllers
             else
             {
                 // speichern
-                unitOfWork.createUser(NewUser.Name);
+                unitOfWork.Users.CreateBoAndAdd(NewUser.Name);
                 unitOfWork.SubmitChanges();
 
                 return View("Index", GetUsers(true));
             }
-
         }
 
         [HandleError(ExceptionType = typeof(Exception), View = "Error")]

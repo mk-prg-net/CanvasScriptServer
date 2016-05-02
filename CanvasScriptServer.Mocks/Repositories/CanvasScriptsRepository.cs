@@ -25,10 +25,9 @@
 //<unit_history>
 //------------------------------------------------------------------
 //
-//  Version.......: 1.1
 //  Autor.........: Martin Korneffel (mko)
-//  Datum.........: 
-//  Änderungen....: 
+//  Datum.........: 25.4.2016
+//  Änderungen....: Refactioring in Implementierung neuer Schnittstelle ICanvasScriptRepository
 //
 //</unit_history>
 //</unit_header>        
@@ -42,95 +41,141 @@ using System.Threading.Tasks;
 
 namespace CanvasScriptServer.Mocks
 {
-    public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository<CanvasScript>
+    public class CanvasScriptsRepository : CanvasScriptServer.CanvasScriptRepository
     {
-        List<CanvasScript> _ScriptList = new List<CanvasScript>();
+        List<CanvasScript> _ScriptList;
+        System.Collections.Generic.Queue<Action> _cudActions;
 
-        System.Collections.Generic.Queue<Action> cudActions = new Queue<Action>();
-       
-
-        public readonly string DefaultScript = "[{\"beginPath\": \"true\"}, {\"strokeStyle\": { \"Style\": \"rgb(255, 255, 0)\"}}, {\"moveTo\": {\"X\": 0, \"Y\":0}}, {\"lineTo\": {\"X\": 100, \"Y\":100}}, { \"closePath\": true}, {\"stroke\": true} ]";
-        
-        internal void CreateBoAndAddToCollection(IUser user, string NameOfScript)
+        public CanvasScriptsRepository(List<CanvasScript> ScriptList, System.Collections.Generic.Queue<Action> cudActions)
         {
-            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(NameOfScript));
-
-            var entity = new CanvasScript();
-            entity._Name = NameOfScript;
-            entity._Created = DateTime.Now;
-            entity._Author = user;
-            entity._ScriptAsJson = DefaultScript;
-            cudActions.Enqueue(() => _ScriptList.Add(entity));                
+            _ScriptList = ScriptList;
+            _cudActions = cudActions;
         }
-
-        public override Func<CanvasScript, bool> GetBoIDTest(CanvasScriptKey id)
-        {
-            System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
-
-            return r => r.Author.Name == id.Username && r.Name == id.Scriptname;
-        }
-
 
         Func<CanvasScript, bool> GetBoIDTestIntern(CanvasScriptKey id)
         {
             System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
 
-            return r => r.Author.Name == id.Username && r.Name == id.Scriptname;
+            return r => r.AuthorName == id.Username && r.Name == id.Scriptname;
         }
 
 
-        public override void RemoveFromCollection(CanvasScriptKey id)
+        public override void RemoveBo(CanvasScriptKey id)
         {
             System.Diagnostics.Contracts.Contract.Requires(!string.IsNullOrWhiteSpace(id.Scriptname));
 
             var entity = _ScriptList.Single(GetBoIDTestIntern(id));
             
-            cudActions.Enqueue(() => _ScriptList.Remove(entity));
+            _cudActions.Enqueue(() => _ScriptList.Remove(entity));
         }
 
-        public override void SubmitChanges()
+
+        public override bool ExistsBo(CanvasScriptKey id)
         {
-            while (cudActions.Any())
-            {
-                cudActions.Dequeue()();
-            }
-            Debug.WriteLine("Änderungen an UserRepository übernommen. Anz:" + _ScriptList.Count);   
+            return _ScriptList.Any(GetBoIDTestIntern(id));
         }
 
-        public override bool Any(CanvasScriptKey id)
+
+        public override ICanvasScript GetBo(CanvasScriptKey id)
         {
-            return _ScriptList.Any(GetBoIDTest(id));
+            return _ScriptList.Find(r => r.AuthorName == id.Username && r.Name == id.Scriptname);
         }
 
-
-        public override CanvasScript GetBo(CanvasScriptKey id)
+        /// <summary>
+        /// Builder für eingeschränkte und sortierte Teilmengen
+        /// </summary>
+        public class FilteredAndSortedSetBuilder : CanvasScriptServer.CanvasScriptRepository.IFilteredAndSortedSetBuilder
         {
-            return _ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname);
+            /// <summary>
+            /// Einschränkungen (Filter) auf der Menge definieren
+            /// </summary>
+
+            IQueryable<CanvasScript> query;
+
+            public FilteredAndSortedSetBuilder( List<CanvasScript> ScriptList)
+            {
+                query = ScriptList.AsQueryable();
+            }
+
+            public void defNameLike(string pattern)
+            {
+                query = query.Where(r => r.Name.Contains(pattern));
+            }
+
+            public void defAuthor(string name)
+            {
+                query = query.Where(r => r.AuthorName == name);
+            }
+
+            public void defCreatedBetween(DateTime begin, DateTime end)
+            {
+                query = query.Where(r => r.Created >= begin && r.Created <= end);
+            }
+
+            public void defModifiedBetween(DateTime begin, DateTime end)
+            {
+                query = query.Where(r => r.Modified >= begin && r.Modified <= end);
+            }
+
+            /// <summary>
+            /// Soriterkriterien definieren
+            /// </summary>
+
+            List<mko.BI.Repositories.DefSortOrder<CanvasScript>> _DefSortOrders = new List<mko.BI.Repositories.DefSortOrder<CanvasScript>>();
+
+
+            public void sortByName(bool descending)
+            {
+                _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, string>(r => r.Name, descending));
+            }
+
+            public void sortByAuthorName(bool descending = false)
+            {
+                _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, string>(r => r.AuthorName, descending));
+            }
+
+            public void sortByCreated(bool descending)
+            {
+                _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, DateTime>(r => r.Created, descending));
+            }
+
+            public void sortByModified(bool descending)
+            {
+                _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, DateTime>(r => r.Modified, descending));
+            }
+
+            /// <summary>
+            /// Bilden der eingeschränkten und sortierten Teilmenge
+            /// </summary>
+            /// <returns></returns>
+            public mko.BI.Repositories.Interfaces.IFilteredSortedSet<ICanvasScript> GetSet()
+            {
+                if (!_DefSortOrders.Any())
+                {
+                    _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, DateTime>(r => r.Created, true));
+                }
+                return new mko.BI.Repositories.FilteredSortedSet<CanvasScript>(query, _DefSortOrders);
+            }
         }
 
-        public override IEnumerable<CanvasScript> Get(System.Linq.Expressions.Expression<Func<CanvasScript, bool>> filter = null, Func<IQueryable<CanvasScript>, IOrderedQueryable<CanvasScript>> orderBy = null, string includeProperties = "")
+        /// <summary>
+        /// Liefert einen Builder, mit dem eine eingeschränkte (gefilterte) und sortierte Teilmenge von CanvasScripten definiert werden kann
+        /// </summary>
+        /// <returns></returns>
+        public override CanvasScriptRepository.IFilteredAndSortedSetBuilder getFilteredAndSortedSetBuilder()
         {
-            var query = _ScriptList.AsQueryable();
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+            return new FilteredAndSortedSetBuilder(_ScriptList);
         }
 
+        /// <summary>
+        /// Builder zum Aktualisieren eines Datensatzes abrufen
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public override ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id)
         {
-            return new Bo.CanvasScriptBuilder(_ScriptList.Find(r => r.Author.Name == id.Username && r.Name == id.Scriptname));
+            return new Bo.CanvasScriptBuilder(_ScriptList.Find(r => r.AuthorName == id.Username && r.Name == id.Scriptname));
         }
 
-        
     }
 }

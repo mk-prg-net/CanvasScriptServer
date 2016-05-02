@@ -10,9 +10,9 @@ namespace CanvasScriptServer.MVC.Controllers
 {
     public class CanvasScriptsController : Controller
     {
-        ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork;
+        ICanvasScriptServerUnitOfWork unitOfWork;
 
-        public CanvasScriptsController(ICanvasScriptServerUnitOfWork<DB.Users, DB.Scripts> unitOfWork)
+        public CanvasScriptsController(ICanvasScriptServerUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -27,7 +27,11 @@ namespace CanvasScriptServer.MVC.Controllers
         private Models.CanvasScriptsMgmt.IndexViewModel CreateIndexViewModel(string username)
         {
             var user = unitOfWork.Users.GetBo(username);
-            var Model = new Models.CanvasScriptsMgmt.IndexViewModel(user, user.Scripts);
+
+            var userScriptsBld = unitOfWork.Scripts.getFilteredAndSortedSetBuilder();
+            userScriptsBld.defAuthor(username);
+
+            var Model = new Models.CanvasScriptsMgmt.IndexViewModel(user, userScriptsBld.GetSet().Get());
             return Model;
         }
 
@@ -50,7 +54,7 @@ namespace CanvasScriptServer.MVC.Controllers
 
         public ActionResult Delete(string username, string scriptname)
         {
-            unitOfWork.deleteScript(username, scriptname);
+            unitOfWork.Scripts.RemoveBo(CanvasScriptKey.Create(username, scriptname));
             unitOfWork.SubmitChanges();
 
             var Model = CreateIndexViewModel(username);

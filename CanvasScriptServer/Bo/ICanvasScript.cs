@@ -25,10 +25,9 @@
 //<unit_history>
 //------------------------------------------------------------------
 //
-//  Version.......: 1.1
 //  Autor.........: Martin Korneffel (mko)
-//  Datum.........: 
-//  Änderungen....: 
+//  Datum.........: 25.4.2016
+//  Änderungen....: Eigenschaft IUser Author geändert in string NameAuthor
 //
 //</unit_history>
 //</unit_header>        
@@ -52,7 +51,7 @@ namespace CanvasScriptServer
         /// <summary>
         /// Name des Benutzers, dem das Script zugeordnet ist
         /// </summary>
-        IUser Author { get;}
+        string AuthorName { get;}
 
         /// <summary>
         /// Tag,  an dem das Script erstellt wurde

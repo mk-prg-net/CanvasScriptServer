@@ -8,14 +8,6 @@ namespace CanvasScriptServer.DB
 {
     partial class Users : IUser
     {
-        IEnumerable<ICanvasScript> IUser.Scripts
-        {
-            get
-            {
-                return Scripts.ToArray();
-            }
-        }
-
 
         string IUser.Name
         {

@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/15/2016 13:37:09
--- Generated from EDMX file: C:\Users\marti_000\Documents\prj\NET\2016-03-07-München-Net-modern\CanvasScriptServer\CanvasScriptServer.DB\CanvasScriptDB.edmx
+-- Date Created: 04/28/2016 23:49:42
+-- Generated from EDMX file: C:\Users\marti_000\Documents\prj\NET\C#\CanvasScriptServer\CanvasScriptServer.DB\CanvasScriptDB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -44,7 +44,8 @@ GO
 
 -- Creating table 'UsersSet'
 CREATE TABLE [dbo].[UsersSet] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Created] datetime  NOT NULL
 );
 GO
 

@@ -23,6 +23,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Created" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="ScriptsSet">
     <Key>
@@ -92,6 +93,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Scripts" Relationship="CanvasScriptDB.UsersScripts" FromRole="Users" ToRole="Scripts" />
           <NavigationProperty Name="Name" Relationship="CanvasScriptDB.UserNamesUsers" FromRole="Users" ToRole="UserNames" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="Scripts">
           <Key>
@@ -141,6 +143,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(CanvasScriptDB.Users)">
         <MappingFragment StoreEntitySet="UsersSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
