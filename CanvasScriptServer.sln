@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.DB.Test"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.Mocks.Test", "CanvasScriptServer.Mocks.Test\CanvasScriptServer.Mocks.Test.csproj", "{D9F61F29-FB3B-4ECE-AA94-1B71AA2419FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAspIdentity", "NewAspIdentity\NewAspIdentity.csproj", "{128DF607-268B-44FC-9CB4-A294AB7FFCD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -505,6 +507,36 @@ Global
 		{D9F61F29-FB3B-4ECE-AA94-1B71AA2419FA}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D9F61F29-FB3B-4ECE-AA94-1B71AA2419FA}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
 		{D9F61F29-FB3B-4ECE-AA94-1B71AA2419FA}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Individual|Any CPU.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Individual|Any CPU.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Individual|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Individual|Mixed Platforms.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Individual|x86.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Realease_mit_Trace|Any CPU.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Realease_mit_Trace|Any CPU.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Realease_mit_Trace|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Realease_mit_Trace|Mixed Platforms.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Realease_mit_Trace|x86.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.Release|x86.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.SiemensKonfig|Any CPU.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.SiemensKonfig|Any CPU.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.SiemensKonfig|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.SiemensKonfig|Mixed Platforms.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.SiemensKonfig|x86.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Any CPU.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Any CPU.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
+		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
