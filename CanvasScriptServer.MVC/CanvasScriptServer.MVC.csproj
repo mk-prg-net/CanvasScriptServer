@@ -172,6 +172,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CanvasScriptsController.cs" />
     <Compile Include="Controllers\CanvasScriptWebApiController.cs" />
+    <Compile Include="Controllers\CanvasScriptWebApiV2Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

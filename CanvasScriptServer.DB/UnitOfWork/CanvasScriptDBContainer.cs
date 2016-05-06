@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 namespace CanvasScriptServer.DB
 {
     public partial class CanvasScriptDBContainer : ICanvasScriptServerUnitOfWork
-    {   
+    {
+        public void init()
+        {
+            
+        }
+
         public UserRepositoryV2 Users
         {
             get { 

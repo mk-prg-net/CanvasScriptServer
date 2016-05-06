@@ -62,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bo\CanvasScriptFlat.cs" />
     <Compile Include="Bo\Scripts.cs" />
+    <Compile Include="Bo\UserFlat.cs" />
     <Compile Include="Bo\Users.cs" />
     <Compile Include="CanvasScriptDB.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -81,6 +83,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CanvasScriptRepository.cs" />
+    <Compile Include="Repository\CanvasScriptRepository.FilteredSortedSet.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Scripts.cs">
       <DependentUpon>CanvasScriptDB.Entities.tt</DependentUpon>

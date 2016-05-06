@@ -103,8 +103,8 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
         }
 
 
-        function MakeRequestScriptUrl(userName, scriptName) {
-            return '/api/CanvasScriptWebApi?userName=' + userName + '&scriptName=' + scriptName;
+        function MakeRequestScriptUrl(authorName, scriptName) {
+            return '/api/CanvasScriptWebApiV2?id=' + authorName + ':' + scriptName;
         }
 
         // Wiederherstellen vom Server
@@ -112,6 +112,8 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
             var url = MakeRequestScriptUrl(userName, scriptName);
 
             // Script beim Start vom Server abrufen
+            // Der Server liefert als json, und dokumentiert es im Response durch einen Contenttype-Header
+            // jQuery führt dann die Deserialisierung selbständig durch.
             $.ajax({
                 method: "GET",
                 //dataType: "json",
@@ -122,11 +124,11 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
                 // Es hat geklappt
                 console.log(Data.toString());
-                var jsonObjListFromServer = JSON.parse(Data);
+                var jsonObjListFromServer = JSON.parse(Data.ScriptAsJson);
 
                 // Aus den Objekten ein echtes Canvas-Script aufbauen
-                //var scriptsFromServer = Script.from(jsonObjListFromServer);
-                Drawing = Script.from(jsonObjListFromServer);
+                ////var scriptsFromServer = Script.from(jsonObjListFromServer);
+                Drawing = Script.from(jsonObjListFromServer);                
 
                 // Script zeichnen
                 //Script.plot(scriptsFromServer, ctx);
@@ -134,7 +136,7 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
                 // Die Liste der Canvas- Befehle ausgeben
                 PrintScriptListing(jsonObjListFromServer);
-
+                
 
             }).fail(function (jqXHR, textStatus, errorThrown) {
 
@@ -167,7 +169,7 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
                 // Es hat geklappt
                 console.log(Data.toString());
-                var jsonObjListFromServer = JSON.parse(Data);
+                var jsonObjListFromServer = JSON.parse(Data.ScriptAsJson);
 
                 // Aus den Objekten ein echtes Canvas-Script aufbauen
                 var scriptsFromServer = Script.from(jsonObjListFromServer);

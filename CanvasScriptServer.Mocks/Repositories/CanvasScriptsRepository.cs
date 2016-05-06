@@ -124,22 +124,22 @@ namespace CanvasScriptServer.Mocks
             List<mko.BI.Repositories.DefSortOrder<CanvasScript>> _DefSortOrders = new List<mko.BI.Repositories.DefSortOrder<CanvasScript>>();
 
 
-            public void sortByName(bool descending)
+            public void OrderByName(bool descending)
             {
                 _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, string>(r => r.Name, descending));
             }
 
-            public void sortByAuthorName(bool descending = false)
+            public void OrderByAuthor(bool descending = false)
             {
                 _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, string>(r => r.AuthorName, descending));
             }
 
-            public void sortByCreated(bool descending)
+            public void OrderByCreated(bool descending)
             {
                 _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, DateTime>(r => r.Created, descending));
             }
 
-            public void sortByModified(bool descending)
+            public void OrderByModified(bool descending)
             {
                 _DefSortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<CanvasScript, DateTime>(r => r.Modified, descending));
             }
@@ -156,6 +156,8 @@ namespace CanvasScriptServer.Mocks
                 }
                 return new mko.BI.Repositories.FilteredSortedSet<CanvasScript>(query, _DefSortOrders);
             }
+
+
         }
 
         /// <summary>

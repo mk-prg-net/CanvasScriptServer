@@ -72,15 +72,23 @@ namespace CanvasScriptServer
             /// <param name="pattern"></param>
             void defNameLike(string pattern);
 
+            void OrderByName(bool descending);
+
             /// <summary>
             /// Einschränken auf Scripte eines Authors
             /// </summary>
             /// <param name="name"></param>
             void defAuthor(string name);
 
+            void OrderByAuthor(bool descending);
+
             void defCreatedBetween(DateTime begin, DateTime end);
 
+            void OrderByCreated(bool descending);
+
             void defModifiedBetween(DateTime begin, DateTime end);
+
+            void OrderByModified(bool descending);
         }
 
         public abstract IFilteredAndSortedSetBuilder getFilteredAndSortedSetBuilder();

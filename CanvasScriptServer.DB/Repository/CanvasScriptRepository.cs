@@ -1,12 +1,49 @@
-﻿using System;
+﻿//<unit_header>
+//----------------------------------------------------------------
+//
+// Martin Korneffel: IT Beratung/Softwareentwicklung
+// Stuttgart, den 11.3.2016
+//
+//  Projekt.......: CanvasScriptServer.DB
+//  Name..........: CanvasScriptRepository.cs
+//  Aufgabe/Fkt...: Implementierung des CanvasScriptRepository für eine 
+//                  mittels EF 6.0 Model First erstellte DB
+//
+//
+//
+//
+//<unit_environment>
+//------------------------------------------------------------------
+//  Zielmaschine..: PC 
+//  Betriebssystem: Windows 7 mit .NET 4.5
+//  Werkzeuge.....: Visual Studio 2013
+//  Autor.........: Martin Korneffel (mko)
+//  Version 1.0...: 
+//
+// </unit_environment>
+//
+//<unit_history>
+//------------------------------------------------------------------
+//
+//  Autor.........: Martin Korneffel (mko)
+//  Datum.........: 6.5.2016
+//  Änderungen....: Eager Loading für WebApi Zugriffe implementiert
+//
+//</unit_history>
+//</unit_header>        
+        
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Für Erweiterungsmethode Include
+using System.Data.Entity;
+
 namespace CanvasScriptServer.DB.Repository
 {
-    public class CanvasScriptRepository: CanvasScriptServer.CanvasScriptRepository
+    public partial class CanvasScriptRepository: CanvasScriptServer.CanvasScriptRepository
     {
 
         public CanvasScriptRepository(CanvasScriptDBContainer Orm)
@@ -25,17 +62,17 @@ namespace CanvasScriptServer.DB.Repository
 
         public override bool ExistsBo(CanvasScriptKey id)
         {
-            return Orm.ScriptsSet.Any(r => r.Name == id.Scriptname && r.User.Name.Name == id.Username);
+            return Orm.ScriptsSet.Include(r => r.User.Name).Any(r => r.Name == id.Scriptname && r.User.Name.Name == id.Username);
         }
 
         internal Scripts GetScript(CanvasScriptKey id)
         {
-            return Orm.ScriptsSet.FirstOrDefault(r => r.User.Name.Name == id.Username && r.Name == id.Scriptname);
+            return Orm.ScriptsSet.Include(r => r.User.Name).FirstOrDefault(r => r.User.Name.Name == id.Username && r.Name == id.Scriptname);
         }
 
         public override ICanvasScript GetBo(CanvasScriptKey id)
         {
-            return GetScript(id);
+            return new CanvasScriptFlat(GetScript(id));
         }
 
         public override ICanvasScriptBuilder GetBoBuilder(CanvasScriptKey id)
@@ -54,59 +91,6 @@ namespace CanvasScriptServer.DB.Repository
             {
                 throw new Exception("Das zu löschende Script mit dem Namen " + id.Scriptname + "existiert nicht");
             }            
-        }
-
-
-        public class FilteredAnSortedSetBuilder : CanvasScriptServer.CanvasScriptRepository.IFilteredAndSortedSetBuilder
-        {
-
-
-            IQueryable<Scripts> _query;
-            List<mko.BI.Repositories.DefSortOrder<Scripts>> _SortOrders = new List<mko.BI.Repositories.DefSortOrder<Scripts>>();
-
-            internal FilteredAnSortedSetBuilder(DB.CanvasScriptDBContainer Orm)
-            {
-                _query = Orm.ScriptsSet;
-            }
-
-
-
-            public void defNameLike(string pattern)
-            {
-                _query = _query.Where(r => r.Name.Contains(pattern));
-            }
-
-            public void defAuthor(string name)
-            {
-                _query = _query.Where(r => r.User.Name.Name.Contains(name));
-            }
-
-            public void defCreatedBetween(DateTime begin, DateTime end)
-            {
-                _query = _query.Where(r => begin <= r.Created && r.Created <= end);
-            }
-
-            public void defModifiedBetween(DateTime begin, DateTime end)
-            {
-                _query = _query.Where(r => begin <= r.Modified && r.Modified <= end);
-            }
-
-            public mko.BI.Repositories.Interfaces.IFilteredSortedSet<ICanvasScript> GetSet()
-            {
-                if (!_SortOrders.Any())
-                {
-                    _SortOrders.Add(new mko.BI.Repositories.DefSortOrderCol<Scripts, DateTime>(r => r.Created, true));
-                }
-                else { }
-
-                return new mko.BI.Repositories.FilteredSortedSet<Scripts>(_query, _SortOrders);
-            }
-        }
-
-
-        public override CanvasScriptServer.CanvasScriptRepository.IFilteredAndSortedSetBuilder getFilteredAndSortedSetBuilder()
-        {
-            return new FilteredAnSortedSetBuilder(Orm);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace CanvasScriptServer.MVC
             var container = new UnityContainer();
 
             container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.DB.CanvasScriptDBContainer>();
+            //container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.Mocks.CanvasScriptServerUnitOfWork>();
 
             config.DependencyResolver = new UnityDependencyResolverWebApi(container);            
 

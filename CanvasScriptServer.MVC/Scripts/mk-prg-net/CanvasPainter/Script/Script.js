@@ -132,7 +132,7 @@ define(['Geometry/Point',
                 //});
             },
 
-            // Stellt aus einer Liste von Objekten im json- Format wirder ein Script her
+            // Stellt aus einer Liste von Objekten im json- Format wieder ein Script her
             from: function (jsonObjects) {
 
                 var self = this;

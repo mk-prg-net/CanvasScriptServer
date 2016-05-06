@@ -40,8 +40,17 @@ namespace CanvasScriptServer.DB.Test
             var Anton = UofW.Users.GetBo("Anton");
             Assert.AreEqual("Anton", Anton.Name);
 
-            UofW.createScript(Anton.Name, "T1");
+            var Berta = UofW.Users.GetBo("Berta");
+            Assert.AreEqual("Berta", Berta.Name);
+
+
+            UofW.createScript(Berta.Name, "T3");
+            UofW.createScript(Berta.Name, "T5");
+            UofW.createScript(Berta.Name, "T2");
+
             UofW.createScript(Anton.Name, "T2");
+            UofW.createScript(Anton.Name, "T3");
+            UofW.createScript(Anton.Name, "T1");
 
             UofW.SubmitChanges();
 
@@ -52,9 +61,34 @@ namespace CanvasScriptServer.DB.Test
             Assert.AreEqual(3, AllUsers.Count());
 
             // Menge aller Scripte über Repository bilden
-            var AllScripts = UofW.Scripts.getFilteredAndSortedSetBuilder().GetSet();
+            var AllScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
+            AllScriptsBld.OrderByAuthor(false);
+            AllScriptsBld.OrderByName(true);
 
-            Assert.AreEqual(2, AllScripts.Count());            
+            var AllScripts = AllScriptsBld.GetSet();
+            Assert.AreEqual(6, AllScripts.Count());            
+
+            var allScriptsSorted = AllScripts.Get().ToArray();
+
+            Assert.AreEqual("Anton", allScriptsSorted[0].AuthorName);
+            Assert.AreEqual("T3", allScriptsSorted[0].Name);
+
+            Assert.AreEqual("Anton", allScriptsSorted[1].AuthorName);
+            Assert.AreEqual("T2", allScriptsSorted[1].Name);
+
+            Assert.AreEqual("Anton", allScriptsSorted[2].AuthorName);
+            Assert.AreEqual("T1", allScriptsSorted[2].Name);
+
+            Assert.AreEqual("Berta", allScriptsSorted[3].AuthorName);
+            Assert.AreEqual("T5", allScriptsSorted[3].Name);
+
+            Assert.AreEqual("Berta", allScriptsSorted[4].AuthorName);
+            Assert.AreEqual("T3", allScriptsSorted[4].Name);
+
+            Assert.AreEqual("Berta", allScriptsSorted[5].AuthorName);
+            Assert.AreEqual("T2", allScriptsSorted[5].Name);
+
+
 
             // Teilmenge aller Scripte von Anton bilden
             var AntonsScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
@@ -62,21 +96,23 @@ namespace CanvasScriptServer.DB.Test
 
             var AntonsScripts = AntonsScriptsBld.GetSet();
             
-            Assert.AreEqual(AntonsScripts.Count(), 2, "Anton sollte zwei Skripte besitzen");
+            Assert.AreEqual(AntonsScripts.Count(), 3, "Anton sollte drei Skripte besitzen");
 
 
             var T2Bld = UofW.Scripts.GetBoBuilder(CanvasScriptKey.Create(Anton.Name, "T2"));
             T2Bld.setScript("[{\"beginPath\": true}, {\"strokeStyle\": \"#FF0000\"}, {\"lineTo\": {X: 100, Y: 100}}]");
 
-            var Berta = UofW.Users.GetBo("Berta");
-            Assert.AreEqual("Berta", Berta.Name);
 
             // Alle Scripte von Berta auflisten
-            var BertasScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
-            BertasScriptsBld.defAuthor(Berta.Name);
+            var Caesar = UofW.Users.GetBo("Cäsar");
+            Assert.AreEqual("Cäsar", Caesar.Name);
 
-            var BertasScripts = BertasScriptsBld.GetSet();            
-            Assert.IsFalse(BertasScripts.Any(), "Berta sollte keine Skripte besitzen");
+
+            var CaesarsScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
+            CaesarsScriptsBld.defAuthor(Caesar.Name);
+
+            var CaesarsScripts = CaesarsScriptsBld.GetSet();
+            Assert.IsFalse(CaesarsScripts.Any(), "Cäsar sollte keine Skripte besitzen");
 
             UofW.deleteUser("Cäsar");
             UofW.SubmitChanges();
@@ -100,6 +136,16 @@ namespace CanvasScriptServer.DB.Test
 
             UofW.deleteUser(Anton.Name);
             UofW.SubmitChanges();
+
+            var BertasScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
+            BertasScriptsBld.defAuthor(Berta.Name);
+
+            var BertasScripts = BertasScriptsBld.GetSet();
+
+            foreach (var script in BertasScripts.Get())
+            {
+                UofW.Scripts.RemoveBo(CanvasScriptKey.Create(script.AuthorName, script.Name));
+            }
 
             UofW.deleteUser(Berta.Name);
             UofW.SubmitChanges();

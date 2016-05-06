@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 using System.Linq.Expressions;
 
+// Für Erweiterungsmethode Include
+using System.Data.Entity;
+
+
 namespace CanvasScriptServer.DB.Repository
 {
     public class UserRepository : CanvasScriptServer.UserRepositoryV2
@@ -55,7 +59,7 @@ namespace CanvasScriptServer.DB.Repository
             internal FilteredAndSortedSetBuilder(CanvasScriptDBContainer Orm)
             {
                 this.Orm = Orm;
-                _query = Orm.UsersSet;
+                _query = Orm.UsersSet.Include(r => r.Name);
             }
 
             public void defNameLike(string pattern)

@@ -41,6 +41,7 @@ namespace CanvasScriptServer.MVC.App_Start
             // TODO: Register your types here
 
             container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.DB.CanvasScriptDBContainer>();
+            //container.RegisterType<CanvasScriptServer.ICanvasScriptServerUnitOfWork, CanvasScriptServer.Mocks.CanvasScriptServerUnitOfWork>();
 
         }
     }
