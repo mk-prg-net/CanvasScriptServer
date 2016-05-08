@@ -18,8 +18,6 @@ namespace CanvasScriptServer.MVC
                  url: "cvs/{controller}/{action}/{orderUpward}",
                  defaults: new { controller = "User", action = "Index", orderUpward = true });
 
-
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

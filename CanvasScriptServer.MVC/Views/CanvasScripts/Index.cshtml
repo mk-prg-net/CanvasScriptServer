@@ -24,13 +24,14 @@
                 @script.Name
             </td>
             <td>
-                <a href="@Url.RouteUrl("cvs", new{action="Edit", userName= script.AuthorName, scriptName= script.Name})">
-                    <span class="glyphicon glyphicon-pencil"></span> edit
+                @* Zugriff auf CanvasScript- Ressource über URI, die von der WebApi gehosted wird*@
+                <a href="~/api/CanvasScriptWebApiV2?id=@script.AuthorName:@script.Name">
+                    <span class="glyphicon glyphicon-stats"></span> ansehen
                 </a>
             </td>
             <td>
-                <a href="@Url.Action("Index", "ScriptShow", new{ id= script.Name})">
-                    <span class="glyphicon glyphicon-stats"></span> ansehen
+                <a href="@Url.RouteUrl("cvs", new{action="Edit", userName= script.AuthorName, scriptName= script.Name})">
+                    <span class="glyphicon glyphicon-pencil"></span> edit
                 </a>
             </td>
             <td>

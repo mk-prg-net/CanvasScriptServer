@@ -39,6 +39,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+//using System.Web.Mvc;
+//using System.Web.Mvc.Razor;
+
 namespace CanvasScriptServer.MVC.Controllers
 {
     public class CanvasScriptWebApiV2Controller : ApiController
@@ -60,10 +63,10 @@ namespace CanvasScriptServer.MVC.Controllers
         {
             var parts = id.Split(':');
             if (parts.Count() != 2)
-                throw new HttpResponseException(new HttpResponseMessage() 
-                            { 
-                                StatusCode = HttpStatusCode.BadRequest, 
-                                ReasonPhrase = "Schlüssel ungültig. Schüssel muss definiert sein durch: id=author:scriptname" 
+                throw new HttpResponseException(new HttpResponseMessage()
+                            {
+                                StatusCode = HttpStatusCode.BadRequest,
+                                ReasonPhrase = "Schlüssel ungültig. Schüssel muss definiert sein durch: id=author:scriptname"
                             });
 
             var script = unitOfWork.Scripts.GetBo(CanvasScriptKey.Create(parts[0], parts[1]));
@@ -72,6 +75,7 @@ namespace CanvasScriptServer.MVC.Controllers
 
             return script;
         }
+
 
         /// <summary>
         /// Hilfsfunktion, um eine neues Zeitintervall zu erzeugen, dessen Beginn und Ende im darstellbaren Zeitraum eins
@@ -268,6 +272,12 @@ namespace CanvasScriptServer.MVC.Controllers
             unitOfWork.SubmitChanges();
 
             return unitOfWork.Scripts.GetBo(key);            
+        }
+
+
+        public HttpResponseMessage Delete(string id)
+        {
+            return Request.CreateResponse(HttpStatusCode.NotImplemented);
         }
 
     }

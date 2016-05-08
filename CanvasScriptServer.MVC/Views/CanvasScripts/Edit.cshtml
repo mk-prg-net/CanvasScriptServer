@@ -4,7 +4,7 @@
 @model CanvasScriptServer.ICanvasScript
 
 @{
-    ViewBag.Title = "Canvas Painter: edit " + Model.Name + " von " + Model.AuthorName;
+    ViewBag.Title = "Canvas Painter: Edit " + Model.AuthorName + ":" + Model.Name;
 }
 
 <form>
@@ -53,7 +53,6 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col-xs-12 col-md-9 col-lg-9">
             <canvas id="pane" class="" width="800" height="600"></canvas>
         </div>

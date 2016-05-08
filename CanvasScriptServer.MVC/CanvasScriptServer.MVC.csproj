@@ -182,6 +182,10 @@
     <Compile Include="Models\CanvasScriptsMgmt\IndexViewModel.cs" />
     <Compile Include="Models\CanvasScriptsMgmt\ScriptSimple.cs" />
     <Compile Include="Models\UserMgmt\UserViewModel.cs" />
+    <Compile Include="MyWebApi\CanvasScriptHtmlFormaterBuffered.cs" />
+    <Compile Include="MyWebApi\CanvasScriptServerXmlFormatterBuffered.cs" />
+    <Compile Include="MyWebApi\CanvasScriptXmlFormatter.cs" />
+    <Compile Include="MyWebApi\ViewRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +282,7 @@
     <Content Include="Views\CanvasScripts\Index.cshtml" />
     <Content Include="Views\CanvasScripts\NewScript.cshtml" />
     <Content Include="Views\CanvasScripts\Edit.cshtml" />
+    <Content Include="Views\CanvasScripts\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
