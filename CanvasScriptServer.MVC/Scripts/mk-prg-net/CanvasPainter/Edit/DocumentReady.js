@@ -145,6 +145,38 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
             });
         }
 
+        // Wiederherstellen vom Server als XML
+        function RestoreFromServerAsXml(userName, scriptName, ctx) {
+            var url = MakeRequestScriptUrl(userName, scriptName);
+
+            // Script beim Start vom Server abrufen
+            // Der Server liefert als json, und dokumentiert es im Response durch einen Contenttype-Header
+            // jQuery führt dann die Deserialisierung selbständig durch.
+            $.ajax({
+                method: "GET",
+                dataType: "xml",
+                accept: {
+                    xml: 'application/xml'
+                },
+                url: url,
+                data: '',
+                cache: false
+            }).done(function (Data, status, req) {
+
+                // Es hat geklappt
+                console.log(Data.toString());              
+
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                // Leider ein Fehler
+                console.log(jqXHR.status.toString());
+            });
+        }
+
+
+
+
 
         function SaveToServer(userName, scriptName, ctx) {
 
@@ -186,7 +218,30 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
         }
 
 
+
+        /// Hier gehts los...
         $(document).ready(function () {
+
+            // Back- Button mit Eventhandler ausstatten
+            $('#back').click(function () {
+                
+                // alert("Du hast back geklickt");
+
+                if (Drawing.length > 0) {                    
+                    var last = Drawing.pop();
+                    if (last.Name !== "metaMark") {
+                        do {
+                            last = Drawing.pop();
+                        } while (last.Name !== "metaMark" && Drawing.length > 0);
+                    }
+                }
+
+                Script.plot(canvasInit, ctx);
+                Script.plot(Drawing, ctx);
+
+            });
+
+
 
             var canvas = $(idCanvas).get(0);
             var ctx = canvas.getContext('2d');
@@ -227,6 +282,11 @@ requirejs(['Geometry/Angle', 'Geometry/Point', 'Script/Script', 'Basics/StyleDes
 
             $("#RestoreFromServer").click(function () {
                 RestoreFromServer(userName, scriptName, ctx);
+            });
+
+
+            $("#RestoreFromServerAsXml").click(function () {
+                RestoreFromServerAsXml(userName, scriptName, ctx);
             });
 
 

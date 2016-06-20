@@ -129,30 +129,30 @@ namespace CanvasScriptServer.DB.Test
                 
             }
 
-            foreach (var script in AntonsScripts.Get())
-            {
-                UofW.Scripts.RemoveBo(CanvasScriptKey.Create(script.AuthorName, script.Name));
-            }
+            //foreach (var script in AntonsScripts.Get())
+            //{
+            //    UofW.Scripts.RemoveBo(CanvasScriptKey.Create(script.AuthorName, script.Name));
+            //}
 
-            UofW.deleteUser(Anton.Name);
-            UofW.SubmitChanges();
+            //UofW.deleteUser(Anton.Name);
+            //UofW.SubmitChanges();
 
-            var BertasScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
-            BertasScriptsBld.defAuthor(Berta.Name);
+            //var BertasScriptsBld = UofW.Scripts.getFilteredAndSortedSetBuilder();
+            //BertasScriptsBld.defAuthor(Berta.Name);
 
-            var BertasScripts = BertasScriptsBld.GetSet();
+            //var BertasScripts = BertasScriptsBld.GetSet();
 
-            foreach (var script in BertasScripts.Get())
-            {
-                UofW.Scripts.RemoveBo(CanvasScriptKey.Create(script.AuthorName, script.Name));
-            }
+            //foreach (var script in BertasScripts.Get())
+            //{
+            //    UofW.Scripts.RemoveBo(CanvasScriptKey.Create(script.AuthorName, script.Name));
+            //}
 
-            UofW.deleteUser(Berta.Name);
-            UofW.SubmitChanges();
+            //UofW.deleteUser(Berta.Name);
+            //UofW.SubmitChanges();
 
 
-            Assert.IsFalse(AllUsers.Any(), "Alle Benutzer sollten gelöscht sein");
-            Assert.IsFalse(AllScripts.Any(), "Alle Skripte sollten gelöscht sein");
+            //Assert.IsFalse(AllUsers.Any(), "Alle Benutzer sollten gelöscht sein");
+            //Assert.IsFalse(AllScripts.Any(), "Alle Skripte sollten gelöscht sein");
 
         }
 

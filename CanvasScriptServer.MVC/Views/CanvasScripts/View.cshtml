@@ -2,6 +2,7 @@
 
 @{
     Layout = null;
+    var CreatedAsTimeString = Model.Created.ToShortTimeString();
 }
 <!DOCTYPE html>
 
@@ -24,6 +25,8 @@
                 <dd>@Model.Created.ToString()</dd>
                 <dt>letzte Änderung</dt>
                 <dd>@Model.Modified.ToString()</dd>
+                <dt>Erstellungszeit</dt>
+                <dd>@CreatedAsTimeString</dd>
             </dl>
 
             @* Name des Benutzers sichern *@

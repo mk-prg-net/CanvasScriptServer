@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasScriptServer.Mocks.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAspIdentity", "NewAspIdentity\NewAspIdentity.csproj", "{128DF607-268B-44FC-9CB4-A294AB7FFCD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroUnitTests", "IntroUnitTests\IntroUnitTests.csproj", "{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroEntityFramework", "IntroEntityFramework\IntroEntityFramework.csproj", "{3B03805A-A67B-49A4-8E98-7262E8CC5498}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -537,6 +541,66 @@ Global
 		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
 		{128DF607-268B-44FC-9CB4-A294AB7FFCD2}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Individual|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Individual|Any CPU.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Individual|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Individual|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Individual|x86.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Realease_mit_Trace|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Realease_mit_Trace|Any CPU.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Realease_mit_Trace|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Realease_mit_Trace|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Realease_mit_Trace|x86.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.SiemensKonfig|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.SiemensKonfig|Any CPU.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.SiemensKonfig|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.SiemensKonfig|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.SiemensKonfig|x86.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.unsere eigene konfiguration|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.unsere eigene konfiguration|Any CPU.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
+		{6C8DC641-F5ED-4C47-ACFF-F35E73BD7E8F}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Individual|Any CPU.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Individual|Any CPU.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Individual|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Individual|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Individual|x86.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Realease_mit_Trace|Any CPU.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Realease_mit_Trace|Any CPU.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Realease_mit_Trace|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Realease_mit_Trace|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Realease_mit_Trace|x86.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.SiemensKonfig|Any CPU.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.SiemensKonfig|Any CPU.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.SiemensKonfig|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.SiemensKonfig|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.SiemensKonfig|x86.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.unsere eigene konfiguration|Any CPU.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.unsere eigene konfiguration|Any CPU.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.unsere eigene konfiguration|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.unsere eigene konfiguration|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B03805A-A67B-49A4-8E98-7262E8CC5498}.unsere eigene konfiguration|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

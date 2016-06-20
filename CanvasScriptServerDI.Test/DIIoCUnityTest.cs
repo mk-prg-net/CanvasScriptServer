@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 using Microsoft.Practices.Unity;
 
@@ -9,30 +10,45 @@ namespace CanvasScriptServerDI.Test
     public class DIIoCUnityTest
     {
 
-        class UserManager
+        interface IUserFactrory
         {
-            CanvasScriptServer.IUser user;
+            CanvasScriptServer.IUser Create(string name);
+        }
 
-            public UserManager(CanvasScriptServer.IUser user)
+
+        class MockUserFactory : IUserFactrory
+        {
+
+            public CanvasScriptServer.IUser Create(string name)
             {
-                this.user = user;
+                return new CanvasScriptServer.Mocks.User(name);
+            }
+        }
+
+
+        class UserRepository
+        {
+            List<CanvasScriptServer.IUser> users = new List<CanvasScriptServer.IUser>();
+
+            IUserFactrory _factory;
+
+            public UserRepository(IUserFactrory factory)
+            {
+                _factory = factory;
             }
 
 
-            public void SetName(string NewName)
+            public void Create(string id)
             {
-                user.Name = NewName;
+                var user = _factory.Create(id);
+                users.Add(user);
+                
             }
 
-
-            public string UserName
+            IEnumerable<CanvasScriptServer.IUser> GetAll()
             {
-                get
-                {
-                    return user.Name;
-                }
+                return users;
             }
-
         }
 
 
@@ -41,14 +57,15 @@ namespace CanvasScriptServerDI.Test
         public void PoorMansDITest()
         {
             // Abhängigkeit
-            var Anton = new CanvasScriptServer.Mocks.User();
+            var Anton = new CanvasScriptServer.Mocks.User("Anton");
 
             // Abhängige
-            var mgr = new UserManager(Anton);
+            var mgr = new UserRepository(new MockUserFactory());
 
-            mgr.SetName("Anton");
+            mgr.Create("Anton");
+            mgr.Create("Berta");
 
-            Assert.AreEqual(Anton.Name, "Anton");
+            
 
         }
 
@@ -63,16 +80,12 @@ namespace CanvasScriptServerDI.Test
             // benötigt werden
 
             IoC.RegisterType<CanvasScriptServer.IUser, CanvasScriptServer.Mocks.User>();
+            IoC.RegisterType<IUserFactrory, MockUserFactory>();
 
+            var mgr = IoC.Resolve<UserRepository>();
 
-            var usr = IoC.Resolve<CanvasScriptServer.IUser>();
-            var mgr = IoC.Resolve<UserManager>();
-                      
-            
-
-            mgr.SetName("Anton");
-
-            Assert.AreEqual("Anton", mgr.UserName);
+            mgr.Create("Anton");
+            mgr.Create("Berta");
 
         }
     }

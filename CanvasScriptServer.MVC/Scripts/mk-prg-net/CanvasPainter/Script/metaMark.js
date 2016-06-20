@@ -56,7 +56,7 @@ define(['./ScriptProto'], function (ScriptProto) {
             value: function () {
                 return {
                     metaMark: {
-                        Name: this.Name
+                        Id: this.Id
                     }
                 };
             }
@@ -65,12 +65,12 @@ define(['./ScriptProto'], function (ScriptProto) {
     });
 
 
-    function create(name) {
+    function create(id) {
 
         return Object.create(Proto,
             {
-                Name: {
-                    value: name,
+                Id: {
+                    value: id,
                     writable: false,
                     enumerable: true,
                 },
@@ -79,7 +79,7 @@ define(['./ScriptProto'], function (ScriptProto) {
     }
 
     function createFromObject(obj) {
-        return create(obj.Name);
+        return create(obj.Id);
     }
 
     return {

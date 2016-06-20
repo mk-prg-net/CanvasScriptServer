@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CanvasScriptsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ScriptsSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ScriptAsJson" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserNamesSet">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="User_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UserNamesUsers">
+          <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
+          <End Role="UserNamesSet" Type="Self.UserNamesSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserNamesSet">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersScripts">
+          <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ScriptsSet" Type="Self.ScriptsSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScriptsSet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CanvasScriptsDBModelStoreContainer">
+          <EntitySet Name="ScriptsSet" EntityType="Self.ScriptsSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserNamesSet" EntityType="Self.UserNamesSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersSet" EntityType="Self.UsersSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserNamesUsers" Association="Self.FK_UserNamesUsers">
+            <End Role="UsersSet" EntitySet="UsersSet" />
+            <End Role="UserNamesSet" EntitySet="UserNamesSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersScripts" Association="Self.FK_UsersScripts">
+            <End Role="UsersSet" EntitySet="UsersSet" />
+            <End Role="ScriptsSet" EntitySet="ScriptsSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CanvasScriptsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ScriptsSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ScriptAsJson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UsersSet" Relationship="Self.FK_UsersScripts" FromRole="ScriptsSet" ToRole="UsersSet" />
+        </EntityType>
+        <EntityType Name="UserNamesSet">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UsersSet" Relationship="Self.FK_UserNamesUsers" FromRole="UserNamesSet" ToRole="UsersSet" />
+        </EntityType>
+        <EntityType Name="UsersSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ScriptsSet" Relationship="Self.FK_UsersScripts" FromRole="UsersSet" ToRole="ScriptsSet" />
+          <NavigationProperty Name="UserNamesSet" Relationship="Self.FK_UserNamesUsers" FromRole="UsersSet" ToRole="UserNamesSet" />
+        </EntityType>
+        <Association Name="FK_UsersScripts">
+          <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ScriptsSet" Type="Self.ScriptsSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScriptsSet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserNamesUsers">
+          <End Role="UsersSet" Type="Self.UsersSet" Multiplicity="1" />
+          <End Role="UserNamesSet" Type="Self.UserNamesSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserNamesSet">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CanvasScriptsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ScriptsSet" EntityType="Self.ScriptsSet" />
+          <EntitySet Name="UserNamesSet" EntityType="Self.UserNamesSet" />
+          <EntitySet Name="UsersSet" EntityType="Self.UsersSet" />
+          <AssociationSet Name="FK_UsersScripts" Association="Self.FK_UsersScripts">
+            <End Role="UsersSet" EntitySet="UsersSet" />
+            <End Role="ScriptsSet" EntitySet="ScriptsSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserNamesUsers" Association="Self.FK_UserNamesUsers">
+            <End Role="UsersSet" EntitySet="UsersSet" />
+            <End Role="UserNamesSet" EntitySet="UserNamesSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CanvasScriptsDBModelStoreContainer" CdmEntityContainer="CanvasScriptsDBEntities">
+          <EntitySetMapping Name="ScriptsSet">
+            <EntityTypeMapping TypeName="CanvasScriptsDBModel.ScriptsSet">
+              <MappingFragment StoreEntitySet="ScriptsSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ScriptAsJson" ColumnName="ScriptAsJson" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserNamesSet">
+            <EntityTypeMapping TypeName="CanvasScriptsDBModel.UserNamesSet">
+              <MappingFragment StoreEntitySet="UserNamesSet">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersSet">
+            <EntityTypeMapping TypeName="CanvasScriptsDBModel.UsersSet">
+              <MappingFragment StoreEntitySet="UsersSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

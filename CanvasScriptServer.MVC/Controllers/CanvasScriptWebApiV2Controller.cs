@@ -59,7 +59,9 @@ namespace CanvasScriptServer.MVC.Controllers
         /// <param name="AuthorName"></param>
         /// <param name="ScriptName"></param>
         /// <returns></returns>
-        public ICanvasScript GetScriptById(string id)
+        /// 
+        [HttpGet]
+        public ICanvasScript ScriptById(string id)
         {
             var parts = id.Split(':');
             if (parts.Count() != 2)
@@ -159,6 +161,8 @@ namespace CanvasScriptServer.MVC.Controllers
         /// <returns>Alle Scripte, die den im Querystring definierten Einschränkungen genügen</returns>
         public IEnumerable<ICanvasScript> GetScripts()
         {
+            
+
             // Zugriff auf die Filterdefinitionen im Querystring
             var NameValuePairs = Request.GetQueryNameValuePairs();
 
